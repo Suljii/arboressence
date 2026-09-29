@@ -4,7 +4,7 @@ export const contact = {
   tel: "06 17 68 94 20",
   telRaw: "0617689420",
   email: "pietarbor.essence@gmail.com",
-  adresse: "Maisons-Alfort, 94700 Val-de-Marne",
+  adresse: "Villeneuve-le-Roi, 94290 Val-de-Marne",
   horaires: "Lun–Ven 8h–18h · Sam 8h–12h",
   // Laisser vide pour masquer l'icône dans le footer
   instagram: "",

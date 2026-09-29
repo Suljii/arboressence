@@ -1,6 +1,6 @@
 # Arbor'essence – Site Paysagiste 🌿
 
-Site vitrine statique (Astro 7) d'un paysagiste basé à Maisons-Alfort (94).
+Site vitrine statique (Astro 7) d'un paysagiste basé à Villeneuve-le-Roi (94).
 
 ## Structure du projet
 
