@@ -1,0 +1,134 @@
+---
+import { contact } from '../../data/seo.js';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import ServiceHero from '../../components/ServiceHero.astro';
+
+const prestations = [
+  { icon: "🌿", titre: "Création de jardin", desc: "Conception sur-mesure, sélection végétale, plantations et finitions pour un jardin qui vous ressemble." },
+  { icon: "🟩", titre: "Engazonnement", desc: "Semis ou gazon en rouleaux avec préparation soignée du sol pour favoriser une pelouse dense et homogène." },
+  { icon: "🪨", titre: "Allées & bordures", desc: "Création d'allées en graviers, pavés ou dalles avec pose de bordures pour un jardin structuré." },
+];
+const villes = ["Maisons-Alfort", "Créteil", "Vincennes", "Saint-Maur-des-Fossés", "Charenton-le-Pont", "Alfortville", "Ivry-sur-Seine", "Paris"];
+---
+
+<Layout
+  title="Aménagement Paysager Val-de-Marne & Île-de-France | Arbor'essence"
+  description="Création et aménagement paysager sur-mesure en Val-de-Marne et Île-de-France. Jardins, massifs, engazonnement, allées. Paysagiste professionnel depuis 20 ans. Devis gratuit."
+>
+  <Header />
+  <Breadcrumb items={[{ label: 'Aménagement paysager' }]} />
+  <ServiceHero
+    titre="Aménagement paysager sur-mesure"
+    sousTitre="Création de jardins"
+    icon="🌿"
+    intro="De la conception à la réalisation, Arbor'essence crée des espaces extérieurs qui reflètent votre personnalité et s'adaptent à votre terrain en Île-de-France."
+  />
+
+  <section class="content-section">
+    <div class="container">
+      <div class="content-grid">
+        <div class="content-main reveal">
+          <p class="tag">Notre approche</p>
+          <h2>Un jardin pensé pour vous, réalisé avec soin</h2>
+          <p>Chaque projet d'aménagement paysager est unique. Nous commençons toujours par une visite gratuite sur site pour analyser votre terrain, comprendre vos besoins et vos envies. C'est à partir de cette rencontre que nous concevons un projet personnalisé.</p>
+          <p>Notre expérience de plus de 20 ans en Île-de-France nous permet de maîtriser les contraintes locales : nature des sols, microclimat, règles d'urbanisme, et essences adaptées à chaque situation.</p>
+          <p>Du jardin contemporain épuré au jardin naturel et sauvage, du petit espace de ville à la grande propriété, nous réalisons tous types de projets avec le même souci du détail.</p>
+        </div>
+        <div class="content-aside reveal">
+          <div class="aside-card">
+            <h3>Nos engagements</h3>
+            <ul>
+              <li>✅ Visite et devis gratuits</li>
+              <li>✅ Végétaux de qualité horticole</li>
+              <li>✅ Suivi post-plantation</li>
+            </ul>
+          </div>
+          <div class="aside-cta">
+            <p>Votre projet mérite un regard professionnel.</p>
+            <a href="/contact" class="btn btn-primary">Demander un devis →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="prestations-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="tag">Nos prestations</p>
+        <h2>Tout ce que nous réalisons</h2>
+      </div>
+      <div class="prestations-grid">
+        {prestations.map((p, i) => (
+          <div class="prest-card reveal" style={`transition-delay:${i*0.07}s`}>
+            <span class="prest-icon">{p.icon}</span>
+            <h3>{p.titre}</h3>
+            <p>{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="zone-section">
+    <div class="container reveal">
+      <p class="tag">Zone d'intervention</p>
+      <h2>Nous intervenons dans tout le 94 et à Paris</h2>
+      <div class="villes-list">
+        {villes.map(v => <span class="ville-chip">{v}</span>)}
+        <span class="ville-chip ville-chip--more">et toute l'Île-de-France</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <div class="container reveal">
+      <h2>Prêt à transformer votre jardin ?</h2>
+      <p>Contactez-nous pour une visite gratuite et un devis personnalisé rapide.</p>
+      <div class="cta-actions">
+        <a href="/contact" class="btn btn-primary">Demande de devis gratuit</a>
+        <a href={`tel:${contact.telRaw}`} class="btn btn-outline">{contact.tel}</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .content-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .content-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4rem; align-items: start; }
+  .content-main h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--vert-fonce); margin-bottom: 1.25rem; }
+  .content-main p { font-size: 0.93rem; line-height: 1.85; color: var(--texte-leger); margin-bottom: 1rem; }
+  .aside-card { background: var(--blanc); padding: 1.75rem; box-shadow: 0 2px 16px rgba(30,58,30,0.07); margin-bottom: 1.5rem; }
+  .aside-card h3 { font-family: var(--font-display); font-size: 1.15rem; color: var(--vert-fonce); margin-bottom: 1rem; }
+  .aside-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .aside-card li { font-size: 0.88rem; color: var(--texte-leger); }
+  .aside-cta { background: var(--vert-fonce); padding: 1.75rem; color: var(--beige); }
+  .aside-cta p { font-size: 0.9rem; margin-bottom: 1.25rem; opacity: 0.8; }
+  .prestations-section { padding: var(--section-py) 0; background: var(--beige); }
+  .section-head { margin-bottom: 2.5rem; }
+  .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--vert-fonce); }
+  .prestations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .prest-card { background: var(--blanc); padding: 1.75rem; box-shadow: 0 2px 12px rgba(30,58,30,0.06); transition: transform 0.3s; }
+  .prest-card:hover { transform: translateY(-4px); }
+  .prest-icon { font-size: 1.6rem; display: block; margin-bottom: 0.75rem; }
+  .prest-card h3 { font-family: var(--font-display); font-size: 1.1rem; color: var(--vert-fonce); margin-bottom: 0.5rem; }
+  .prest-card p { font-size: 0.86rem; line-height: 1.7; color: var(--texte-leger); }
+  .zone-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .zone-section h2 { font-size: clamp(1.5rem, 3vw, 2rem); color: var(--vert-fonce); margin-bottom: 1.5rem; }
+  .villes-list { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .ville-chip { padding: 0.5rem 1.1rem; background: var(--blanc); border: 1.5px solid rgba(30,58,30,0.12); font-size: 0.85rem; color: var(--vert-fonce); }
+  .ville-chip--more { background: var(--vert-moyen); color: var(--beige); border-color: transparent; }
+  .cta-final { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--vert-fonce); text-align: center; }
+  .cta-final h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--beige); margin-bottom: 0.75rem; }
+  .cta-final p { color: rgba(242,234,216,0.7); margin-bottom: 2rem; }
+  .cta-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .btn-outline { background: transparent; color: var(--beige); border: 1.5px solid rgba(242,234,216,0.4); display: inline-flex; align-items: center; padding: .9rem 2rem; font-family: var(--font-body); font-size: .85rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; transition: all .3s; }
+  .btn-outline:hover { background: rgba(242,234,216,0.1); }
+  @media (max-width: 860px) { .content-grid { grid-template-columns: 1fr; } .prestations-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .prestations-grid { grid-template-columns: 1fr; } }
+</style>

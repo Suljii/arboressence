@@ -1,0 +1,197 @@
+---
+import { contact, villes } from '../data/seo.js';
+
+interface Props {
+  title: string;
+  description?: string;
+  schemas?: object[];   // données structurées propres à la page (Service…)
+  noindex?: boolean;
+}
+const { title, schemas = [], noindex = false, description = "Arbor'essence – Paysagiste en Île-de-France. Aménagement, élagage, entretien espaces verts dans le Val-de-Marne et alentours." } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og-image.png', Astro.site);
+const businessId = new URL('/#entreprise', Astro.site).href;
+
+const localBusiness = {
+  "@context": "https://schema.org",
+  "@type": "LandscapingBusiness",
+  "@id": businessId,
+  name: "Arbor'essence",
+  description: "Paysagiste en Île-de-France : aménagement, élagage, entretien d'espaces verts.",
+  url: Astro.site?.href,
+  telephone: `+33${contact.telRaw.slice(1)}`,
+  email: contact.email,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Maisons-Alfort",
+    postalCode: "94700",
+    addressRegion: "Île-de-France",
+    addressCountry: "FR",
+  },
+  areaServed: villes.map(v => v.nom),
+  openingHoursSpecification: [
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "18:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "08:00", closes: "12:00" },
+  ],
+  sameAs: [contact.instagram, contact.facebook].filter(Boolean),
+};
+---
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+  <link rel="canonical" href={canonical} />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content="Arbor'essence" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  {noindex && <meta name="robots" content="noindex" />}
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
+  {schemas.map(s => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+  <slot />
+</body>
+</html>
+
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --vert-fonce:   #1E3A1E;
+    --vert-moyen:   #2E5827;
+    --vert-clair:   #4A7C3F;
+    --vert-sauge:   #7A9E72;
+    --beige:        #F2EAD8;
+    --beige-clair:  #FAF7F0;
+    --terre:        #8B6B3D;
+    --blanc:        #FFFFFF;
+    --texte:        #1E2B1E;
+    --texte-leger:  #5A6B5A;
+
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body:    'Jost', sans-serif;
+
+    --max-w: 1200px;
+    --section-py: clamp(4rem, 8vw, 7rem);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    font-weight: 300;
+    color: var(--texte);
+    background: var(--beige-clair);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  img { max-width: 100%; display: block; }
+  a { text-decoration: none; color: inherit; }
+
+  .container {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 clamp(1.25rem, 5vw, 3rem);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 2rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary {
+    background: var(--vert-moyen);
+    color: var(--blanc);
+  }
+  .btn-primary:hover {
+    background: var(--vert-fonce);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--vert-moyen);
+    border: 1.5px solid var(--vert-moyen);
+  }
+  .btn-outline:hover {
+    background: var(--vert-moyen);
+    color: var(--blanc);
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--vert-clair);
+    margin-bottom: 1rem;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>

@@ -1,0 +1,53 @@
+---
+import { contact } from '../data/seo.js';
+interface Props {
+  titre: string;
+  sousTitre?: string;
+  intro?: string;
+  icon?: string;
+}
+const { titre, sousTitre, intro, icon } = Astro.props;
+---
+<div class="service-page">
+  <section class="page-hero">
+    <div class="container">
+      {icon && <span class="hero-icon">{icon}</span>}
+      {sousTitre && <p class="tag">{sousTitre}</p>}
+      <h1>{titre}</h1>
+      {intro && <p class="hero-intro">{intro}</p>}
+      <div class="hero-cta">
+        <a href="/contact" class="btn btn-primary">Devis gratuit</a>
+        <a href={`tel:${contact.telRaw}`} class="btn btn-outline-light">{contact.tel}</a>
+      </div>
+    </div>
+  </section>
+  <slot />
+</div>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #1E3A1E 0%, #2E5827 60%, #4A7C3F 100%);
+    padding: clamp(3.5rem, 8vw, 6rem) 0 clamp(3rem, 6vw, 5rem);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 80% 50%, rgba(122,158,114,0.1) 0%, transparent 60%);
+  }
+  .page-hero .container { position: relative; }
+  .hero-icon { font-size: 2.5rem; display: block; margin-bottom: 1rem; }
+  .page-hero .tag { color: rgba(242,234,216,0.65); margin-bottom: 0.75rem; }
+  .page-hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); color: #F2EAD8; margin-bottom: 1rem; max-width: 22ch; }
+  .hero-intro { color: rgba(242,234,216,0.75); font-size: 1rem; line-height: 1.75; max-width: 58ch; margin-bottom: 2rem; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-outline-light {
+    background: transparent; color: #F2EAD8; border: 1.5px solid rgba(242,234,216,0.45);
+    display: inline-flex; align-items: center; padding: .9rem 2rem;
+    font-family: var(--font-body); font-size: .85rem; font-weight: 500;
+    letter-spacing: .12em; text-transform: uppercase; transition: all .3s;
+  }
+  .btn-outline-light:hover { background: rgba(242,234,216,0.1); border-color: #F2EAD8; }
+</style>

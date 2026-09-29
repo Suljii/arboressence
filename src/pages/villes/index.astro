@@ -1,0 +1,118 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { villes, metiers } from '../../data/seo.js';
+---
+
+<Layout
+  title="Paysagiste Val-de-Marne (94) – Toutes nos villes | Arbor'essence"
+  description="Arbor'essence intervient dans toutes les communes du Val-de-Marne : élagage, entretien, aménagement paysager. Retrouvez votre ville et demandez un devis gratuit."
+>
+  <Header />
+  <Breadcrumb items={[{ label: 'Nos villes' }]} />
+
+  <section class="page-hero">
+    <div class="container">
+      <p class="tag">Couverture géographique</p>
+      <h1>Nos villes d'intervention dans le 94</h1>
+      <p class="hero-sub">Arbor'essence intervient dans toutes les communes du Val-de-Marne et en Île-de-France. Sélectionnez votre ville pour découvrir nos services.</p>
+    </div>
+  </section>
+
+  <section class="villes-section">
+    <div class="container">
+      <div class="villes-grid">
+        {villes.map(v => (
+          <div class="ville-card reveal">
+            <a href={`/villes/${v.slug}`} class="vc-main-link">
+              <div class="vc-head">
+                <span class="vc-pin">📍</span>
+                <div>
+                  <h2>{v.nom}</h2>
+                  <span class="vc-dept">{v.dept}</span>
+                </div>
+              </div>
+              <p>{v.intro}</p>
+            </a>
+            <div class="vc-metiers">
+              {metiers.slice(0, 4).map(m => (
+                <a href={`/metiers/${m.slug}/${v.slug}`} class="vc-tag">
+                  {m.icon} {m.titre.split(' ')[0]}
+                </a>
+              ))}
+            </div>
+            <a href={`/villes/${v.slug}`} class="vc-link">Voir les services →</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <div class="container reveal">
+      <h2>Votre ville n'est pas listée ?</h2>
+      <p>Nous intervenons dans toute l'Île-de-France. Contactez-nous pour vérifier notre disponibilité.</p>
+      <a href="/contact" class="btn btn-primary">Demander un devis gratuit →</a>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #1E3A1E 0%, #2E5827 60%, #4A7C3F 100%);
+    padding: clamp(3.5rem, 8vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem);
+  }
+  .page-hero .tag { color: rgba(242,234,216,0.6); }
+  .page-hero h1 { font-size: clamp(2rem, 5vw, 3rem); color: #F2EAD8; margin-bottom: 0.75rem; }
+  .hero-sub { color: rgba(242,234,216,0.75); font-size: 1rem; line-height: 1.75; max-width: 60ch; }
+  .villes-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .villes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  .ville-card {
+    background: var(--blanc);
+    box-shadow: 0 2px 12px rgba(30,58,30,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: transform 0.3s;
+    overflow: hidden;
+  }
+  .ville-card:hover { transform: translateY(-4px); }
+  .vc-main-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.75rem 1.75rem 0;
+    flex: 1;
+  }
+  .vc-head { display: flex; align-items: center; gap: 0.75rem; }
+  .vc-pin { font-size: 1.5rem; }
+  .vc-head h2 { font-family: var(--font-display); font-size: 1.1rem; color: var(--vert-fonce); margin: 0; }
+  .vc-dept { font-size: 0.72rem; color: var(--texte-leger); letter-spacing: 0.05em; }
+  .ville-card p { font-size: 0.82rem; color: var(--texte-leger); line-height: 1.6; flex: 1; }
+  .vc-metiers { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0 1.75rem; }
+  .vc-tag {
+    padding: 0.25rem 0.6rem;
+    background: var(--beige-clair);
+    border: 1px solid rgba(30,58,30,0.1);
+    font-size: 0.72rem;
+    color: var(--vert-fonce);
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+  .vc-tag:hover { background: var(--vert-moyen); color: var(--beige); border-color: transparent; }
+  .vc-link { font-size: 0.78rem; font-weight: 500; color: var(--vert-moyen); padding: 0 1.75rem 1.75rem; }
+  .cta-final { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--vert-fonce); text-align: center; }
+  .cta-final h2 { font-size: clamp(1.5rem, 3vw, 2rem); color: var(--beige); margin-bottom: 0.75rem; }
+  .cta-final p { color: rgba(242,234,216,0.7); margin-bottom: 2rem; }
+  @media (max-width: 1000px) { .villes-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 700px) { .villes-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .villes-grid { grid-template-columns: 1fr; } }
+</style>

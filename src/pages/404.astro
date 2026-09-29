@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { contact } from '../data/seo.js';
+---
+
+<Layout title="Page introuvable | Arbor'essence Paysagiste" noindex>
+  <Header />
+
+  <section class="notfound">
+    <div class="container">
+      <p class="tag">Erreur 404</p>
+      <h1>Cette page s'est égarée dans le jardin</h1>
+      <p>La page que vous cherchez n'existe pas ou a été déplacée.</p>
+      <div class="actions">
+        <a href="/" class="btn btn-primary">Retour à l'accueil</a>
+        <a href="/metiers" class="btn btn-outline">Nos prestations</a>
+        <a href={`tel:${contact.telRaw}`} class="btn btn-outline">{contact.tel}</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .notfound { padding: clamp(5rem, 12vw, 9rem) 0; text-align: center; background: var(--beige-clair); }
+  h1 { font-size: clamp(2rem, 5vw, 3.2rem); color: var(--vert-fonce); margin-bottom: 1rem; }
+  p:not(.tag) { color: var(--texte-leger); margin-bottom: 2.5rem; }
+  .actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+</style>

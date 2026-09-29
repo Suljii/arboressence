@@ -1,0 +1,191 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import Faq from '../../../components/Faq.astro';
+import { metiers, contact, villesDuMetier } from '../../../data/seo.js';
+
+export function getStaticPaths() {
+  return metiers.map(m => ({ params: { pratique: m.slug }, props: { metier: m } }));
+}
+
+const { metier } = Astro.props;
+
+const villesMetier = villesDuMetier(metier);
+const devisUrl = `/contact?service=${metier.slug}#formulaire`;
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: metier.titre,
+  serviceType: metier.titre,
+  description: metier.intro,
+  provider: { "@id": new URL('/#entreprise', Astro.site).href },
+  areaServed: villesMetier.map(v => ({ "@type": "City", name: v.nom })),
+};
+
+const autresMetiers = metiers.filter(m => m.slug !== metier.slug && m.categorie === metier.categorie).slice(0, 4);
+---
+
+<Layout title={metier.metaTitle} description={metier.metaDesc} schemas={[serviceSchema]}>
+  <Header />
+  <Breadcrumb items={[{ label: 'Prestations', href: '/metiers' }, { label: metier.titre }]} />
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="hero-icon">{metier.icon}</span>
+      <p class="tag">{metier.categorie}</p>
+      <h1>{metier.titre}</h1>
+      <p class="hero-sub">{metier.intro}</p>
+      <div class="hero-actions">
+        <a href={devisUrl} class="btn btn-primary">Devis gratuit</a>
+        <a href={`tel:${contact.telRaw}`} class="btn btn-outline-light">{contact.tel}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container content-grid">
+      <div class="content-main reveal">
+        <p class="tag">Notre expertise</p>
+        <h2>{metier.titre} en Île-de-France</h2>
+        {metier.description.split('\n\n').map((para: string) => (
+          <p>{para}</p>
+        ))}
+        {metier.saison && (
+          <div class="saison-box">
+            <strong>📅 Quand intervenir ?</strong>
+            <p>{metier.saison}</p>
+          </div>
+        )}
+      </div>
+      <div class="content-aside reveal">
+        <div class="points-card">
+          <h3>Ce que nous faisons</h3>
+          <ul>
+            {metier.points.map((p: string) => (
+              <li>
+                <span class="check">✓</span>
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="cta-card">
+          <p>Besoin d'un devis pour {metier.avecArticle} en Île-de-France ?</p>
+          <a href={devisUrl} class="btn btn-primary">Devis gratuit →</a>
+          <a href={`tel:${contact.telRaw}`} class="tel-link">📞 {contact.tel}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="zones-section">
+    <div class="container reveal">
+      <p class="tag">Zone d'intervention</p>
+      <h2>{metier.titre} dans votre commune</h2>
+      <p class="zones-intro">Arbor'essence intervient pour {metier.avecArticle} dans toutes les communes du Val-de-Marne et en Île-de-France. Cliquez sur votre ville pour plus d'informations :</p>
+      <div class="villes-grid">
+        {villesMetier.map(v => (
+          <a href={`/metiers/${metier.slug}/${v.slug}`} class="ville-chip">
+            📍 {metier.titre} {v.a}
+          </a>
+        ))}
+        <span class="ville-chip ville-chip--more">+ toute l'IDF</span>
+      </div>
+    </div>
+  </section>
+
+  {autresMetiers.length > 0 && (
+    <section class="autres-section">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="tag">Autres prestations</p>
+          <h2>Dans la même catégorie</h2>
+        </div>
+        <div class="autres-grid">
+          {autresMetiers.map((m, i) => (
+            <a href={`/metiers/${m.slug}`} class="autre-card reveal" style={`transition-delay:${i*0.08}s`}>
+              <span class="autre-icon">{m.icon}</span>
+              <h3>{m.titre}</h3>
+              <p>{m.intro.substring(0, 90)}…</p>
+              <span class="autre-link">Découvrir →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <Faq titre={`${metier.titre} : vos questions`} items={metier.faq ?? []} />
+
+  <section class="cta-final">
+    <div class="container reveal">
+      <h2>Un projet en tête ?</h2>
+      <p>Contactez-nous pour un devis gratuit. Intervention rapide en Val-de-Marne et Île-de-France.</p>
+      <div class="cta-actions">
+        <a href={devisUrl} class="btn btn-primary">Demander un devis gratuit</a>
+        <a href={`tel:${contact.telRaw}`} class="btn btn-outline">{contact.tel}</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #1E3A1E 0%, #2E5827 60%, #4A7C3F 100%);
+    padding: clamp(3.5rem, 8vw, 5.5rem) 0 clamp(2.5rem, 5vw, 4rem);
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 80% 50%, rgba(122,158,114,0.1) 0%, transparent 60%); }
+  .page-hero .container { position: relative; }
+  .hero-icon { font-size: 2.5rem; display: block; margin-bottom: 0.75rem; }
+  .page-hero .tag { color: rgba(242,234,216,0.6); margin-bottom: 0.5rem; }
+  .page-hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); color: #F2EAD8; margin-bottom: 0.75rem; }
+  .hero-sub { color: rgba(242,234,216,0.75); font-size: 1rem; line-height: 1.75; max-width: 58ch; margin-bottom: 2rem; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-outline-light { background: transparent; color: #F2EAD8; border: 1.5px solid rgba(242,234,216,0.4); display: inline-flex; align-items: center; padding: .9rem 2rem; font-family: var(--font-body); font-size: .85rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; transition: all .3s; }
+  .content-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .content-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4rem; align-items: start; }
+  .content-main h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); color: var(--vert-fonce); margin-bottom: 1.25rem; }
+  .content-main p { font-size: 0.93rem; line-height: 1.85; color: var(--texte-leger); margin-bottom: 1rem; }
+  .points-card { background: var(--blanc); padding: 1.75rem; box-shadow: 0 2px 16px rgba(30,58,30,0.07); margin-bottom: 1.5rem; }
+  .points-card h3 { font-family: var(--font-display); font-size: 1.15rem; color: var(--vert-fonce); margin-bottom: 1rem; }
+  .points-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+  .points-card li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.87rem; color: var(--texte-leger); line-height: 1.5; }
+  .check { color: var(--vert-moyen); font-weight: 600; flex-shrink: 0; margin-top: 0.05rem; }
+  .cta-card { background: var(--vert-fonce); padding: 1.75rem; color: var(--beige); display: flex; flex-direction: column; gap: 1rem; }
+  .cta-card p { font-size: 0.9rem; opacity: 0.8; }
+  .tel-link { font-size: 0.88rem; color: var(--vert-sauge); text-align: center; }
+  .zones-section { padding: var(--section-py) 0; background: var(--beige); }
+  .zones-section h2 { font-size: clamp(1.5rem, 3vw, 2rem); color: var(--vert-fonce); margin-bottom: 0.75rem; }
+  .zones-intro { font-size: 0.92rem; color: var(--texte-leger); margin-bottom: 1.5rem; }
+  .villes-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .ville-chip { padding: 0.5rem 1.1rem; background: var(--blanc); border: 1.5px solid rgba(30,58,30,0.1); font-size: 0.85rem; color: var(--vert-fonce); transition: all 0.2s; }
+  .ville-chip:hover { background: var(--vert-moyen); color: var(--beige); border-color: transparent; }
+  .ville-chip--more { background: var(--vert-moyen); color: var(--beige); border-color: transparent; }
+  .autres-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .section-head { margin-bottom: 2rem; }
+  .section-head h2 { font-size: clamp(1.5rem, 3vw, 2rem); color: var(--vert-fonce); }
+  .autres-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .autre-card { background: var(--blanc); padding: 1.75rem; box-shadow: 0 2px 12px rgba(30,58,30,0.06); display: flex; flex-direction: column; gap: 0.6rem; transition: transform 0.3s; }
+  .autre-card:hover { transform: translateY(-4px); }
+  .autre-icon { font-size: 1.5rem; }
+  .autre-card h3 { font-family: var(--font-display); font-size: 1.05rem; color: var(--vert-fonce); }
+  .autre-card p { font-size: 0.83rem; line-height: 1.65; color: var(--texte-leger); flex: 1; }
+  .autre-link { font-size: 0.78rem; font-weight: 500; color: var(--vert-moyen); }
+  .cta-final { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--vert-fonce); text-align: center; }
+  .cta-final h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--beige); margin-bottom: 0.75rem; }
+  .cta-final p { color: rgba(242,234,216,0.7); margin-bottom: 2rem; }
+  .cta-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .btn-outline { background: transparent; color: var(--beige); border: 1.5px solid rgba(242,234,216,0.4); display: inline-flex; align-items: center; padding: .9rem 2rem; font-family: var(--font-body); font-size: .85rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; transition: all .3s; }
+  .btn-outline:hover { background: rgba(242,234,216,0.1); }
+  @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } .autres-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .autres-grid { grid-template-columns: 1fr; } }
+  .saison-box { margin-top: 1.5rem; padding: 1.25rem 1.5rem; background: var(--beige); border-left: 3px solid var(--vert-sauge); }
+  .saison-box strong { font-size: 0.85rem; color: var(--vert-fonce); }
+  .saison-box p { margin: 0.5rem 0 0; }
+</style>

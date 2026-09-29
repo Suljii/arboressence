@@ -1,0 +1,95 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { contact, legal } from '../data/seo.js';
+---
+
+<Layout
+  title="Politique de confidentialité | Arbor'essence Paysagiste"
+  description="Comment Arbor'essence collecte et protège vos données personnelles."
+>
+  <Header />
+  <Breadcrumb items={[{ label: 'Confidentialité' }]} />
+
+  <section class="page-hero">
+    <div class="container">
+      <p class="tag">Vos données</p>
+      <h1>Politique de confidentialité</h1>
+    </div>
+  </section>
+
+  <section class="legal-section">
+    <div class="container legal-content">
+      <h2>Responsable du traitement</h2>
+      <p>
+        {legal.raisonSociale}, {legal.adresseSiege}.
+        Contact : <a href={`mailto:${contact.email}`}>{contact.email}</a>
+      </p>
+
+      <h2>Données collectées</h2>
+      <p>
+        Lorsque vous remplissez le formulaire de demande de devis, nous recevons : vos nom et prénom,
+        votre adresse email, votre numéro de téléphone (facultatif), le service souhaité et le
+        contenu de votre message. Aucune autre donnée n'est collectée par ce site.
+      </p>
+
+      <h2>Finalité et base légale</h2>
+      <p>
+        Ces données servent uniquement à répondre à votre demande et à établir un devis. Le
+        traitement repose sur votre consentement, exprimé en cochant la case prévue à cet effet
+        avant l'envoi du formulaire.
+      </p>
+
+      <h2>Destinataires et durée de conservation</h2>
+      <p>
+        Vos données sont destinées exclusivement à {legal.raisonSociale} et ne sont ni vendues ni
+        cédées à des tiers. Elles sont conservées au maximum 3 ans après notre dernier échange,
+        puis supprimées.
+      </p>
+
+      <h2>Cookies et services tiers</h2>
+      <p>
+        Ce site ne dépose aucun cookie de mesure d'audience ni de publicité. Les polices de
+        caractères sont chargées depuis Google Fonts, ce qui transmet votre adresse IP aux serveurs
+        de Google lors de l'affichage des pages.
+      </p>
+
+      <h2>Vos droits</h2>
+      <p>
+        Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement,
+        de limitation et d'opposition sur vos données, ainsi que du droit de retirer votre
+        consentement à tout moment. Pour les exercer, écrivez-nous à{" "}
+        <a href={`mailto:${contact.email}`}>{contact.email}</a>.
+      </p>
+      <p>
+        Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation
+        à la CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a>).
+      </p>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    background: var(--vert-fonce);
+    padding: 5rem 0 3.5rem;
+    color: var(--beige);
+  }
+  .page-hero .tag { color: var(--vert-sauge); }
+  .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); }
+
+  .legal-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .legal-content { max-width: 780px; }
+  .legal-content h2 {
+    font-size: 1.6rem;
+    color: var(--vert-fonce);
+    margin: 2.5rem 0 0.75rem;
+  }
+  .legal-content h2:first-child { margin-top: 0; }
+  .legal-content p { line-height: 1.8; color: var(--texte-leger); margin-bottom: 1rem; }
+  .legal-content a { color: var(--vert-clair); text-decoration: underline; }
+</style>

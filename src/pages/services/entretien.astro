@@ -1,0 +1,121 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import ServiceHero from '../../components/ServiceHero.astro';
+
+const prestations = [
+  { icon: "🌾", titre: "Tonte de pelouse", desc: "Tonte régulière adaptée à la saison, ramassage ou mulching selon votre préférence.", href: "/metiers/tonte-pelouse" },
+  { icon: "✂️", titre: "Taille de haies", desc: "Taille au cordeau de toutes essences, travail soigné et évacuation des déchets.", href: "/metiers/taille-haies" },
+  { icon: "🌺", titre: "Entretien des massifs", desc: "Désherbage, paillage et taille des arbustes pour des massifs soignés au fil des saisons.", href: "/metiers/desherbage-massifs" },
+  { icon: "🍂", titre: "Ramassage de feuilles", desc: "Intervention en automne pour collecter les feuilles mortes et les évacuer proprement." },
+  { icon: "🌱", titre: "Taille d'arbustes", desc: "Taille en vert et en sec pour les rosiers, hortensias, lavandes et tous vos arbustes d'ornement." },
+  { icon: "📅", titre: "Contrat annuel", desc: "Abonnement d'entretien avec passages planifiés pour un jardin entretenu tout au long de l'année." },
+];
+---
+
+<Layout
+  title="Entretien Espaces Verts Val-de-Marne | Arbor'essence Paysagiste"
+  description="Entretien d'espaces verts, tonte, taille de haies et désherbage en Val-de-Marne. Service pour particuliers, résidences et copropriétés. Contrat annuel. Devis gratuit."
+>
+  <Header />
+  <Breadcrumb items={[{ label: 'Entretien espaces verts' }]} />
+  <ServiceHero
+    titre="Entretien des espaces verts"
+    sousTitre="Jardins entretenus toute l'année"
+    icon="✂️"
+    intro="Tonte, taille, désherbage, ramassage de feuilles… Nous assurons l'entretien régulier de votre jardin tout au long de l'année pour vous libérer de cette charge."
+  />
+
+  <section class="content-section">
+    <div class="container">
+      <div class="content-grid">
+        <div class="content-main reveal">
+          <p class="tag">Un jardin sans effort</p>
+          <h2>L'entretien qui libère votre temps</h2>
+          <p>Entretenir un jardin demande du temps, de l'énergie et une connaissance des végétaux qui ne s'improvise pas. C'est pourquoi particuliers et gestionnaires de résidences font appel à Arbor'essence pour déléguer cette mission à des professionnels.</p>
+          <p>Nous intervenons à la fréquence adaptée à votre jardin et à la saison : hebdomadaire au printemps, quinzomadaire en été, mensuelle en automne/hiver. Nous adaptons notre programme d'entretien à votre jardin spécifique.</p>
+          <p>Pour les copropriétés et résidences, nous proposons des contrats d'entretien annuels avec un planning défini à l'avance et un contact direct avec nous.</p>
+        </div>
+        <div class="content-aside reveal">
+          <div class="aside-card">
+            <h3>Nos clients entretien</h3>
+            <ul>
+              <li>🏡 Particuliers (maisons, pavillons)</li>
+              <li>🏘️ Résidences privées</li>
+              <li>🏢 Copropriétés et syndics</li>
+              <li>🏛️ Administrations</li>
+              <li>🏗️ Promoteurs immobiliers</li>
+            </ul>
+          </div>
+          <div class="aside-cta">
+            <p>Demandez votre contrat d'entretien sur-mesure.</p>
+            <a href="/contact" class="btn btn-primary">Devis gratuit →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="prestations-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="tag">Prestations d'entretien</p>
+        <h2>Tout ce que nous prenons en charge</h2>
+      </div>
+      <div class="prestations-grid">
+        {prestations.map((p, i) => (
+          <div class="prest-card reveal" style={`transition-delay:${i*0.07}s`}>
+            <span class="prest-icon">{p.icon}</span>
+            <h3>{p.titre}</h3>
+            <p>{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sap-reminder">
+    <div class="container sap-inner reveal">
+      <span class="sap-pct">50%</span>
+      <div>
+        <p class="tag" style="color:var(--vert-sauge)">Avantage fiscal particuliers</p>
+        <h2>Déduisez 50% du coût d'entretien de vos impôts</h2>
+        <p>En tant que prestataire déclaré Service à la Personne, les prestations d'entretien de jardin chez les particuliers ouvrent droit à un crédit d'impôt de 50%.</p>
+        <a href="/services/service-personne" class="btn btn-primary" style="margin-top:1.25rem">En savoir plus</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .content-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .content-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4rem; align-items: start; }
+  .content-main h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--vert-fonce); margin-bottom: 1.25rem; }
+  .content-main p { font-size: 0.93rem; line-height: 1.85; color: var(--texte-leger); margin-bottom: 1rem; }
+  .aside-card { background: var(--blanc); padding: 1.75rem; box-shadow: 0 2px 16px rgba(30,58,30,0.07); margin-bottom: 1.5rem; }
+  .aside-card h3 { font-family: var(--font-display); font-size: 1.1rem; color: var(--vert-fonce); margin-bottom: 1rem; }
+  .aside-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .aside-card li { font-size: 0.88rem; color: var(--texte-leger); }
+  .aside-cta { background: var(--vert-fonce); padding: 1.75rem; color: var(--beige); }
+  .aside-cta p { font-size: 0.9rem; margin-bottom: 1.25rem; opacity: 0.8; }
+  .prestations-section { padding: var(--section-py) 0; background: var(--beige); }
+  .section-head { margin-bottom: 2.5rem; }
+  .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--vert-fonce); }
+  .prestations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .prest-card { background: var(--blanc); padding: 1.75rem; box-shadow: 0 2px 12px rgba(30,58,30,0.06); transition: transform 0.3s; }
+  .prest-card:hover { transform: translateY(-4px); }
+  .prest-icon { font-size: 1.6rem; display: block; margin-bottom: 0.75rem; }
+  .prest-card h3 { font-family: var(--font-display); font-size: 1.1rem; color: var(--vert-fonce); margin-bottom: 0.5rem; }
+  .prest-card p { font-size: 0.86rem; line-height: 1.7; color: var(--texte-leger); }
+  .sap-reminder { background: var(--vert-fonce); padding: var(--section-py) 0; }
+  .sap-inner { display: flex; align-items: center; gap: 3rem; flex-wrap: wrap; }
+  .sap-pct { font-family: var(--font-display); font-size: clamp(4rem, 10vw, 6rem); font-weight: 600; color: var(--beige); opacity: 0.9; flex-shrink: 0; }
+  .sap-inner h2 { font-size: clamp(1.4rem, 3vw, 2rem); color: var(--beige); margin-bottom: 0.75rem; }
+  .sap-inner p { color: rgba(242,234,216,0.72); font-size: 0.92rem; line-height: 1.75; }
+  @media (max-width: 860px) { .content-grid { grid-template-columns: 1fr; } .prestations-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .prestations-grid { grid-template-columns: 1fr; } .sap-inner { gap: 1.5rem; } }
+</style>

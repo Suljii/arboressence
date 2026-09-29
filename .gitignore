@@ -1,0 +1,7 @@
+.env
+.vercel/
+.astro/
+.claude/
+node_modules/
+dist/
+*.zip

@@ -1,0 +1,191 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PreuvesLocales from '../../components/PreuvesLocales.astro';
+import { villes, contact, metiersDeVille } from '../../data/seo.js';
+
+export function getStaticPaths() {
+  return villes.map(v => ({ params: { ville: v.slug }, props: { ville: v } }));
+}
+
+const { ville } = Astro.props;
+
+const villesProches = villes.filter(v => v.slug !== ville.slug).slice(0, 6);
+const metiers = metiersDeVille(ville);
+const devisUrl = `/contact?ville=${ville.slug}#formulaire`;
+---
+
+<Layout
+  title={`Paysagiste ${ville.nom} (${ville.dept}) | Arbor'essence – Élagage & Jardins`}
+  description={`Paysagiste professionnel ${ville.a} (${ville.dept}) : aménagement, élagage, entretien de jardins et espaces verts. Intervention rapide, devis gratuit.`}
+>
+  <Header />
+  <Breadcrumb items={[{ label: 'Nos villes', href: '/villes' }, { label: ville.nom }]} />
+
+  <section class="page-hero">
+    <div class="container">
+      <p class="tag">Paysagiste local</p>
+      <h1>Paysagiste {ville.a}</h1>
+      <p class="hero-sub">{ville.intro}</p>
+      <div class="hero-actions">
+        <a href={devisUrl} class="btn btn-primary">Devis gratuit</a>
+        <a href={`tel:${contact.telRaw}`} class="btn btn-outline-light">{contact.tel}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro-section">
+    <div class="container intro-grid">
+      <div class="intro-text reveal">
+        <p class="tag">Intervention {ville.a}</p>
+        <h2>Arbor'essence, votre paysagiste de proximité {ville.a}</h2>
+        <p>{ville.description}</p>
+        {ville.quartiers?.length > 0 && (
+          <p>Nous intervenons dans tous les quartiers {ville.de} : {ville.quartiers.join(', ')}.</p>
+        )}
+        <p>Nous intervenons régulièrement {ville.a} ({ville.dept}) pour des particuliers, des résidences et des copropriétés. La proximité géographique nous permet d'être réactifs, de bien connaître les spécificités locales et d'intervenir rapidement en cas d'urgence.</p>
+        <p>Fort d'une expérience de plus de 20 ans en Île-de-France, Arbor'essence s'est forgé une solide réputation dans le Val-de-Marne pour la qualité de ses interventions et son sérieux.</p>
+      </div>
+      <div class="intro-aside reveal">
+        <div class="contact-card">
+          <h3>Votre devis {ville.a}</h3>
+          <p>Intervention rapide, devis gratuit.</p>
+          <div class="contact-items">
+            <a href={`tel:${contact.telRaw}`} class="contact-item">
+              <span>📞</span>
+              <span>{contact.tel}</span>
+            </a>
+            <a href={`mailto:${contact.email}`} class="contact-item">
+              <span>✉️</span>
+              <span>{contact.email}</span>
+            </a>
+          </div>
+          <a href={devisUrl} class="btn btn-primary" style="width:100%;justify-content:center;margin-top:1.25rem">Demander un devis</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="tag">Nos interventions {ville.a}</p>
+        <h2>Tous nos services {ville.a} ({ville.dept})</h2>
+        <p class="section-intro">Arbor'essence réalise toutes ces prestations directement {ville.a} :</p>
+      </div>
+      <div class="metiers-grid">
+        {metiers.map((m, i) => (
+          <a href={`/metiers/${m.slug}/${ville.slug}`} class="metier-card reveal" style={`transition-delay:${i*0.05}s`}>
+            <span class="m-icon">{m.icon}</span>
+            <div class="m-content">
+              <h3>{m.titre} {ville.a}</h3>
+              <p>{m.intro.substring(0, 80)}…</p>
+            </div>
+            <span class="m-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <PreuvesLocales ville={ville} />
+
+  <section class="seo-text-section">
+    <div class="container reveal">
+      <h2>Pourquoi choisir Arbor'essence {ville.a} ?</h2>
+      <div class="seo-grid">
+        <div>
+          <h3>🏡 Connaissance du terrain local</h3>
+          <p>Nous connaissons les types de sols, les essences les plus adaptées et les contraintes climatiques propres {ville.a} et au Val-de-Marne. Cette connaissance terrain nous permet de vous conseiller avec précision.</p>
+        </div>
+        <div>
+          <h3>⚡ Réactivité et proximité</h3>
+          <p>Implantés dans le Val-de-Marne, nous pouvons intervenir rapidement {ville.a}, même en urgence après une tempête ou pour un arbre dangereux.</p>
+        </div>
+        <div>
+          <h3>🌱 Engagement éco-responsable</h3>
+          <p>Nous privilégions les techniques douces, les produits naturels et le matériel électrique pour minimiser notre impact environnemental dans votre commune.</p>
+        </div>
+        <div>
+          <h3>📋 Devis détaillé et transparent</h3>
+          <p>Nous établissons un devis gratuit et détaillé avant chaque intervention, sans surprise sur la facture finale. Nos tarifs sont clairs et adaptés à votre projet.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="autres-villes">
+    <div class="container reveal">
+      <p class="tag">Couverture géographique</p>
+      <h2>Nous intervenons aussi dans ces villes</h2>
+      <div class="villes-grid">
+        {villesProches.map(v => (
+          <a href={`/villes/${v.slug}`} class="ville-link">
+            📍 Paysagiste {v.nom}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <div class="container reveal">
+      <h2>Un projet {ville.a} ?</h2>
+      <p>Contactez-nous pour un devis gratuit. Nous intervenons {ville.a} et dans toute l'Île-de-France.</p>
+      <a href={devisUrl} class="btn btn-primary btn-lg">Demander mon devis gratuit →</a>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #1E3A1E 0%, #2E5827 60%, #4A7C3F 100%);
+    padding: clamp(3.5rem, 8vw, 5.5rem) 0 clamp(2.5rem, 5vw, 4rem);
+  }
+  .page-hero .tag { color: rgba(242,234,216,0.65); }
+  .page-hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); color: #F2EAD8; margin-bottom: 0.75rem; }
+  .hero-sub { color: rgba(242,234,216,0.75); font-size: 1rem; line-height: 1.7; max-width: 55ch; margin-bottom: 2rem; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-outline-light { background: transparent; color: #F2EAD8; border: 1.5px solid rgba(242,234,216,0.4); display: inline-flex; align-items: center; padding: .9rem 2rem; font-family: var(--font-body); font-size: .85rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; transition: all .3s; }
+  .intro-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .intro-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4rem; align-items: start; }
+  .intro-text h2 { font-size: clamp(1.5rem, 3vw, 2rem); color: var(--vert-fonce); margin-bottom: 1rem; }
+  .intro-text p { font-size: 0.92rem; line-height: 1.85; color: var(--texte-leger); margin-bottom: 0.9rem; }
+  .contact-card { background: var(--vert-fonce); padding: 2rem; color: var(--beige); }
+  .contact-card h3 { font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 0.5rem; }
+  .contact-card > p { font-size: 0.88rem; opacity: 0.7; margin-bottom: 1.25rem; }
+  .contact-items { display: flex; flex-direction: column; gap: 0.75rem; }
+  .contact-item { display: flex; align-items: center; gap: 0.75rem; color: rgba(242,234,216,0.8); font-size: 0.88rem; }
+  .contact-item:hover { color: var(--beige); }
+  .services-section { padding: var(--section-py) 0; background: var(--beige); }
+  .section-head { margin-bottom: 2rem; }
+  .section-head h2 { font-size: clamp(1.5rem, 3vw, 2rem); color: var(--vert-fonce); }
+  .section-intro { font-size: 0.92rem; color: var(--texte-leger); margin-top: 0.5rem; }
+  .metiers-grid { display: flex; flex-direction: column; gap: 0.75rem; }
+  .metier-card { display: flex; align-items: center; gap: 1.25rem; padding: 1.25rem 1.5rem; background: var(--blanc); box-shadow: 0 2px 10px rgba(30,58,30,0.06); transition: transform 0.3s; }
+  .metier-card:hover { transform: translateX(6px); }
+  .m-icon { font-size: 1.6rem; flex-shrink: 0; }
+  .m-content { flex: 1; }
+  .m-content h3 { font-family: var(--font-display); font-size: 1rem; color: var(--vert-fonce); margin-bottom: 0.2rem; }
+  .m-content p { font-size: 0.82rem; color: var(--texte-leger); line-height: 1.5; }
+  .m-arrow { color: var(--vert-moyen); font-size: 1.1rem; }
+  .seo-text-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .seo-text-section h2 { font-size: clamp(1.5rem, 3vw, 2rem); color: var(--vert-fonce); margin-bottom: 2rem; }
+  .seo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .seo-grid h3 { font-family: var(--font-display); font-size: 1.05rem; color: var(--vert-fonce); margin-bottom: 0.5rem; }
+  .seo-grid p { font-size: 0.88rem; line-height: 1.75; color: var(--texte-leger); }
+  .autres-villes { padding: var(--section-py) 0; background: var(--beige); }
+  .autres-villes h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--vert-fonce); margin-bottom: 1.5rem; }
+  .villes-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .ville-link { padding: 0.55rem 1.1rem; background: var(--blanc); border: 1.5px solid rgba(30,58,30,0.1); font-size: 0.85rem; color: var(--vert-fonce); transition: all 0.2s; }
+  .ville-link:hover { background: var(--vert-moyen); color: var(--beige); border-color: transparent; }
+  .cta-final { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--vert-fonce); text-align: center; }
+  .cta-final h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--beige); margin-bottom: 0.75rem; }
+  .cta-final p { color: rgba(242,234,216,0.7); margin-bottom: 2rem; max-width: 55ch; margin-left: auto; margin-right: auto; }
+  .btn-lg { padding: 1.1rem 2.5rem; font-size: 0.9rem; }
+  @media (max-width: 860px) { .intro-grid { grid-template-columns: 1fr; } .seo-grid { grid-template-columns: 1fr; } }
+</style>

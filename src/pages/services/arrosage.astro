@@ -1,0 +1,136 @@
+---
+import { contact } from '../../data/seo.js';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import ServiceHero from '../../components/ServiceHero.astro';
+
+const etapes = [
+  { num: "01", titre: "Diagnostic & conception", desc: "Analyse de votre jardin, de la pression d'eau et des besoins de chaque zone. Conception du plan d'arrosage." },
+  { num: "02", titre: "Installation", desc: "Pose des canalisations enterrées, programmateur, électrovannes et têtes d'arrosage adaptées à chaque zone." },
+  { num: "03", titre: "Réglage & programmation", desc: "Paramétrage du programmateur selon les zones, les plantes et la saison. Mise en service et tests complets." },
+  { num: "04", titre: "Maintenance annuelle", desc: "Hivernage, remise en service au printemps et contrôle annuel pour vérifier le bon fonctionnement." },
+];
+
+const avantages = [
+  { icon: "💧", titre: "Économie d'eau", desc: "Un arrosage automatique bien réglé consomme jusqu'à 30% d'eau en moins qu'un arrosage manuel." },
+  { icon: "⏰", titre: "Gain de temps", desc: "Plus besoin de sortir le tuyau : votre jardin est arrosé automatiquement, même en votre absence." },
+  { icon: "🌱", titre: "Pelouse mieux hydratée", desc: "Un arrosage régulier et précis aide la pelouse à mieux supporter les périodes de fortes chaleurs." },
+];
+---
+
+<Layout
+  title="Arrosage Automatique Val-de-Marne & Paris | Arbor'essence Paysagiste"
+  description="Installation et maintenance d'arrosage automatique en Val-de-Marne et Île-de-France. Systèmes encastrés pour pelouses, massifs et haies. Devis gratuit."
+>
+  <Header />
+  <Breadcrumb items={[{ label: 'Arrosage automatique' }]} />
+  <ServiceHero
+    titre="Arrosage automatique"
+    sousTitre="Installation & maintenance"
+    icon="💧"
+    intro="Un système d'arrosage automatique bien installé vous libère des contraintes d'arrosage tout en apportant à votre jardin l'eau dont il a besoin, même en été et en votre absence."
+  />
+
+  <section class="avantages-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="tag">Pourquoi automatiser ?</p>
+        <h2>Les avantages de l'arrosage automatique</h2>
+      </div>
+      <div class="avantages-grid">
+        {avantages.map((a, i) => (
+          <div class="avantage-card reveal" style={`transition-delay:${i*0.08}s`}>
+            <span class="av-icon">{a.icon}</span>
+            <h3>{a.titre}</h3>
+            <p>{a.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="etapes-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="tag">Notre méthode</p>
+        <h2>De la conception à la mise en service</h2>
+      </div>
+      <div class="etapes-list">
+        {etapes.map((e, i) => (
+          <div class="etape reveal" style={`transition-delay:${i*0.1}s`}>
+            <span class="etape-num">{e.num}</span>
+            <div>
+              <h3>{e.titre}</h3>
+              <p>{e.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="types-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="tag">Nos systèmes</p>
+        <h2>Solutions pour chaque espace</h2>
+      </div>
+      <div class="types-grid">
+        <div class="type-card reveal">
+          <h3>🟩 Arrosage de pelouse</h3>
+          <p>Têtes escamotables enterrées qui surgissent uniquement pendant l'arrosage. Couverture uniforme, aucun obstacle visible. Idéal pour les pelouses de toutes tailles.</p>
+        </div>
+        <div class="type-card reveal">
+          <h3>🌺 Micro-irrigation des massifs</h3>
+          <p>Goutteurs et diffuseurs basse pression pour les massifs, haies et potagers. Arrosage localisé au pied des plantes, économique et précis.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <div class="container reveal">
+      <h2>Un arrosage automatique pour votre jardin ?</h2>
+      <p>Contactez-nous pour une étude gratuite de votre projet d'arrosage automatique.</p>
+      <div class="cta-actions">
+        <a href="/contact" class="btn btn-primary">Demander un devis gratuit</a>
+        <a href={`tel:${contact.telRaw}`} class="btn btn-outline">{contact.tel}</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .avantages-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .section-head { margin-bottom: 2.5rem; }
+  .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--vert-fonce); }
+  .avantages-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .avantage-card { background: var(--blanc); padding: 2rem 1.5rem; box-shadow: 0 2px 12px rgba(30,58,30,0.06); text-align: center; }
+  .av-icon { font-size: 2rem; display: block; margin-bottom: 1rem; }
+  .avantage-card h3 { font-family: var(--font-display); font-size: 1.1rem; color: var(--vert-fonce); margin-bottom: 0.5rem; }
+  .avantage-card p { font-size: 0.86rem; line-height: 1.7; color: var(--texte-leger); }
+  .etapes-section { padding: var(--section-py) 0; background: var(--beige); }
+  .etapes-list { display: flex; flex-direction: column; gap: 0; }
+  .etape { display: flex; align-items: flex-start; gap: 2rem; padding: 2rem 0; border-bottom: 1px solid rgba(30,58,30,0.08); }
+  .etape:last-child { border-bottom: none; }
+  .etape-num { font-family: var(--font-display); font-size: 3rem; font-weight: 600; color: rgba(30,58,30,0.12); flex-shrink: 0; line-height: 1; }
+  .etape h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--vert-fonce); margin-bottom: 0.5rem; }
+  .etape p { font-size: 0.92rem; line-height: 1.75; color: var(--texte-leger); }
+  .types-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .types-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .type-card { background: var(--blanc); padding: 2rem; box-shadow: 0 2px 12px rgba(30,58,30,0.06); }
+  .type-card h3 { font-family: var(--font-display); font-size: 1.15rem; color: var(--vert-fonce); margin-bottom: 0.75rem; }
+  .type-card p { font-size: 0.88rem; line-height: 1.75; color: var(--texte-leger); }
+  .cta-final { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--vert-fonce); text-align: center; }
+  .cta-final h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--beige); margin-bottom: 0.75rem; }
+  .cta-final p { color: rgba(242,234,216,0.7); margin-bottom: 2rem; }
+  .cta-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .btn-outline { background: transparent; color: var(--beige); border: 1.5px solid rgba(242,234,216,0.4); display: inline-flex; align-items: center; padding: .9rem 2rem; font-family: var(--font-body); font-size: .85rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; transition: all .3s; }
+  .btn-outline:hover { background: rgba(242,234,216,0.1); }
+  @media (max-width: 900px) { .avantages-grid { grid-template-columns: 1fr 1fr; } .types-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .avantages-grid { grid-template-columns: 1fr; } }
+</style>

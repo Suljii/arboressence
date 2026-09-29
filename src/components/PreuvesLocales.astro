@@ -1,0 +1,69 @@
+---
+// Réalisations et avis clients d'une ville (données de seo.js) – rien ne s'affiche sans données
+import { metiers } from '../data/seo.js';
+
+interface Props {
+  ville: { a: string; chantiers?: any[]; avis?: any[] };
+  metier?: string; // slug : ne garder que ce métier
+}
+const { ville, metier } = Astro.props;
+const filtre = (x: any) => !metier || !x.metier || x.metier === metier;
+const chantiers = (ville.chantiers ?? []).filter(filtre);
+const avis = (ville.avis ?? []).filter(filtre);
+const titreMetier = (slug: string) => metiers.find(m => m.slug === slug)?.titre;
+---
+
+{(chantiers.length > 0 || avis.length > 0) && (
+  <section class="preuves-section">
+    <div class="container">
+      {chantiers.length > 0 && (
+        <div class="bloc reveal">
+          <p class="tag">Nos réalisations</p>
+          <h2>Chantiers réalisés {ville.a}</h2>
+          <div class="chantiers-grid">
+            {chantiers.map(c => (
+              <article class="chantier">
+                {c.image && <img src={c.image} alt={c.titre} loading="lazy" />}
+                <div class="chantier-body">
+                  {c.metier && <span class="chantier-metier">{titreMetier(c.metier)}</span>}
+                  <h3>{c.titre}</h3>
+                  <p>{c.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      )}
+      {avis.length > 0 && (
+        <div class="bloc reveal">
+          <p class="tag">Ils nous ont fait confiance</p>
+          <h2>Avis de clients {ville.a}</h2>
+          <div class="avis-grid">
+            {avis.map(a => (
+              <blockquote class="avis">
+                <p>« {a.texte} »</p>
+                <cite>{a.auteur}</cite>
+              </blockquote>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+<style>
+  .preuves-section { padding: var(--section-py) 0; background: var(--beige); }
+  .bloc + .bloc { margin-top: 3.5rem; }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); color: var(--vert-fonce); margin-bottom: 1.75rem; }
+  .chantiers-grid, .avis-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+  .chantier { background: var(--blanc); box-shadow: 0 2px 12px rgba(30,58,30,0.06); }
+  .chantier img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .chantier-body { padding: 1.5rem; }
+  .chantier-metier { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--vert-clair); }
+  .chantier h3 { font-size: 1.2rem; color: var(--vert-fonce); margin: 0.4rem 0 0.6rem; }
+  .chantier p { font-size: 0.88rem; line-height: 1.7; color: var(--texte-leger); }
+  .avis { background: var(--blanc); padding: 1.75rem; border-left: 3px solid var(--vert-sauge); }
+  .avis p { font-family: var(--font-display); font-size: 1.15rem; line-height: 1.6; color: var(--vert-fonce); font-style: italic; }
+  .avis cite { display: block; margin-top: 1rem; font-size: 0.8rem; font-style: normal; color: var(--texte-leger); }
+</style>

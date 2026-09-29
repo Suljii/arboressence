@@ -1,0 +1,285 @@
+---
+import { metiers, villes, contact } from '../data/seo.js';
+
+const navServices = [
+  { label: "Aménagement", href: "/services/amenagement" },
+  { label: "Élagage", href: "/services/elagage" },
+  { label: "Entretien", href: "/services/entretien" },
+  { label: "Arrosage", href: "/services/arrosage" },
+  { label: "Service à la personne", href: "/services/service-personne" },
+];
+---
+
+<header id="site-header">
+  <div class="header-top">
+    <div class="container">
+      <span>📍 Val-de-Marne & Île-de-France</span>
+      <a href={`tel:${contact.telRaw}`}>{contact.tel}</a>
+    </div>
+  </div>
+  <div class="header-main">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="Arbor'essence – accueil">
+        <span class="logo-leaf">✦</span>
+        <div>
+          <span class="logo-name">Arbor'essence</span>
+          <span class="logo-sub">Paysagiste - Arboriste grimpeur</span>
+        </div>
+      </a>
+      <nav class="nav-desktop">
+        <!-- Dropdown Prestations -->
+        <div class="nav-dropdown">
+          <a href="/metiers" class="nav-link nav-link--drop">Nos prestations ▾</a>
+          <div class="dropdown-panel">
+            <div class="dropdown-inner">
+              {metiers.map(m => (
+                <a href={`/metiers/${m.slug}`} class="drop-item">
+                  <span class="drop-icon">{m.icon}</span>
+                  <span>{m.titre}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+        <!-- Dropdown Villes -->
+        <div class="nav-dropdown">
+          <a href="/villes" class="nav-link nav-link--drop">Nos villes ▾</a>
+          <div class="dropdown-panel">
+            <div class="dropdown-inner dropdown-inner--villes">
+              {villes.map(v => (
+                <a href={`/villes/${v.slug}`} class="drop-item">
+                  <span class="drop-icon">📍</span>
+                  <span>{v.nom}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+        {navServices.slice(0,2).map(l => (
+          <a href={l.href} class="nav-link">{l.label}</a>
+        ))}
+        <a href="/contact" class="nav-link">Contact</a>
+      </nav>
+      <a href="/contact" class="btn btn-primary header-cta">Devis gratuit</a>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <nav>
+      <a href="/metiers" class="mob-link mob-link--head">Nos prestations</a>
+      {metiers.map(m => (
+        <a href={`/metiers/${m.slug}`} class="mob-link mob-link--sub">{m.icon} {m.titre}</a>
+      ))}
+      <a href="/villes" class="mob-link mob-link--head">Nos villes</a>
+      {villes.map(v => (
+        <a href={`/villes/${v.slug}`} class="mob-link mob-link--sub">📍 {v.nom}</a>
+      ))}
+      <a href="/contact" class="mob-link">Contact</a>
+      <a href="/contact" class="btn btn-primary" style="margin-top:1rem;">Devis gratuit</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  #site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 20px rgba(30,58,30,0.08);
+  }
+
+  .header-top {
+    background: var(--vert-fonce);
+    color: var(--beige);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 0;
+  }
+  .header-top .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header-top a { color: var(--beige); }
+  .header-top a:hover { color: var(--blanc); }
+
+  .header-main {
+    background: var(--beige-clair);
+    border-bottom: 1px solid rgba(30,58,30,0.1);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+  .logo-leaf { font-size: 1.4rem; color: var(--vert-moyen); }
+  .logo-name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--vert-fonce);
+    line-height: 1;
+  }
+  .logo-sub {
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--vert-sauge);
+    margin-top: 0.1rem;
+  }
+
+  .nav-desktop {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .nav-link {
+    font-size: 0.82rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--texte);
+    position: relative;
+    white-space: nowrap;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 0;
+    width: 0; height: 1.5px;
+    background: var(--vert-moyen);
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after { width: 100%; }
+
+  /* Dropdown */
+  .nav-dropdown { position: relative; }
+  .nav-link--drop { cursor: pointer; }
+  .dropdown-panel {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--blanc);
+    box-shadow: 0 8px 30px rgba(30,58,30,0.12);
+    border: 1px solid rgba(30,58,30,0.08);
+    min-width: 260px;
+    z-index: 200;
+  }
+  /* Pont invisible entre le lien et le panel pour éviter que le hover se coupe */
+  .nav-dropdown::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 12px;
+    background: transparent;
+  }
+  .nav-dropdown:hover .dropdown-panel { display: block; }
+  .dropdown-inner {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+  }
+  .dropdown-inner--villes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-width: 340px;
+  }
+  .drop-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 1.25rem;
+    font-size: 0.83rem;
+    color: var(--texte);
+    transition: background 0.15s;
+  }
+  .drop-item:hover { background: var(--beige-clair); color: var(--vert-moyen); }
+  .drop-icon { font-size: 1rem; flex-shrink: 0; }
+
+  .header-cta { font-size: 0.78rem; white-space: nowrap; flex-shrink: 0; }
+
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    flex-shrink: 0;
+  }
+  .burger span {
+    display: block;
+    width: 22px; height: 1.5px;
+    background: var(--vert-fonce);
+    transition: all 0.3s;
+  }
+
+  .mobile-menu {
+    display: none;
+    background: var(--beige-clair);
+    border-bottom: 1px solid rgba(30,58,30,0.1);
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+  .mobile-menu.open { display: block; }
+  .mobile-menu nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 1rem clamp(1.25rem, 5vw, 3rem) 1.5rem;
+  }
+  .mob-link {
+    padding: 0.65rem 0;
+    border-bottom: 1px solid rgba(30,58,30,0.06);
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .mob-link--head {
+    font-weight: 500;
+    color: var(--vert-fonce);
+    padding-top: 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .mob-link--sub {
+    padding-left: 1rem;
+    font-size: 0.83rem;
+    color: var(--texte-leger);
+  }
+
+  @media (max-width: 900px) {
+    .nav-desktop { display: none; }
+    .header-cta { display: none; }
+    .burger { display: flex; margin-left: auto; }
+  }
+</style>
+
+<script>
+  const burger = document.getElementById('burger');
+  const menu = document.getElementById('mobile-menu');
+  burger?.addEventListener('click', () => menu?.classList.toggle('open'));
+</script>

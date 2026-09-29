@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { contact, legal } from '../data/seo.js';
+---
+
+<Layout
+  title="Mentions légales | Arbor'essence Paysagiste"
+  description="Mentions légales du site Arbor'essence, paysagiste dans le Val-de-Marne (94)."
+>
+  <Header />
+  <Breadcrumb items={[{ label: 'Mentions légales' }]} />
+
+  <section class="page-hero">
+    <div class="container">
+      <p class="tag">Informations légales</p>
+      <h1>Mentions légales</h1>
+    </div>
+  </section>
+
+  <section class="legal-section">
+    <div class="container legal-content">
+      <h2>Éditeur du site</h2>
+      <p>
+        {legal.raisonSociale} – {legal.formeJuridique}<br />
+        Siège : {legal.adresseSiege}<br />
+        SIRET : {legal.siret}<br />
+        Téléphone : <a href={`tel:${contact.telRaw}`}>{contact.tel}</a><br />
+        Email : <a href={`mailto:${contact.email}`}>{contact.email}</a>
+      </p>
+      <p>Responsable de la publication : {legal.responsable}</p>
+
+      <h2>Hébergement</h2>
+      <p>{legal.hebergeur}</p>
+
+      <h2>Propriété intellectuelle</h2>
+      <p>
+        L'ensemble des contenus de ce site (textes, images, logo, mise en page) est la propriété
+        d'{legal.raisonSociale}, sauf mention contraire. Toute reproduction, totale ou partielle,
+        sans autorisation écrite préalable est interdite.
+      </p>
+
+      <h2>Responsabilité</h2>
+      <p>
+        {legal.raisonSociale} s'efforce de fournir des informations exactes et à jour, sans pouvoir
+        en garantir l'exhaustivité. Les tarifs et délais indiqués le sont à titre indicatif et ne
+        constituent pas une offre contractuelle : seul le devis signé engage les parties.
+      </p>
+
+      <h2>Données personnelles</h2>
+      <p>
+        Le traitement des données transmises via le formulaire de contact est décrit dans notre{" "}
+        <a href="/confidentialite">politique de confidentialité</a>.
+      </p>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    background: var(--vert-fonce);
+    padding: 5rem 0 3.5rem;
+    color: var(--beige);
+  }
+  .page-hero .tag { color: var(--vert-sauge); }
+  .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); }
+
+  .legal-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .legal-content { max-width: 780px; }
+  .legal-content h2 {
+    font-size: 1.6rem;
+    color: var(--vert-fonce);
+    margin: 2.5rem 0 0.75rem;
+  }
+  .legal-content h2:first-child { margin-top: 0; }
+  .legal-content p { line-height: 1.8; color: var(--texte-leger); margin-bottom: 1rem; }
+  .legal-content a { color: var(--vert-clair); text-decoration: underline; }
+</style>

@@ -1,0 +1,123 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { metiers, villesDuMetier } from '../../data/seo.js';
+
+const categories = [...new Set(metiers.map(m => m.categorie))];
+---
+
+<Layout
+  title="Nos prestations paysagisme en Île-de-France | Arbor'essence"
+  description="Découvrez toutes les prestations d'Arbor'essence : élagage, abattage, taille de haies, création de jardin, engazonnement, tonte… Devis gratuit en Val-de-Marne."
+>
+  <Header />
+  <Breadcrumb items={[{ label: 'Prestations' }]} />
+
+  <section class="page-hero">
+    <div class="container">
+      <p class="tag">Toutes nos prestations</p>
+      <h1>Ce que nous faisons</h1>
+      <p class="hero-sub">De l'élagage à la création de jardin, Arbor'essence couvre l'ensemble des travaux paysagers pour particuliers, résidences et copropriétés en Île-de-France.</p>
+    </div>
+  </section>
+
+  {categories.map(cat => (
+    <section class="cat-section">
+      <div class="container">
+        <h2 class="cat-title">{cat}</h2>
+        <div class="metiers-grid">
+          {metiers.filter(m => m.categorie === cat).map((m, i) => (
+            <div class="metier-card reveal" style={`transition-delay:${i*0.07}s`}>
+              <a href={`/metiers/${m.slug}`} class="mc-main-link">
+                <span class="mc-icon">{m.icon}</span>
+                <h3>{m.titre}</h3>
+                <p>{m.intro}</p>
+              </a>
+              <div class="mc-villes">
+                <span class="mc-villes-label">Disponible à :</span>
+                {villesDuMetier(m).slice(0, 5).map(v => (
+                  <a href={`/metiers/${m.slug}/${v.slug}`} class="mc-ville">{v.nom}</a>
+                ))}
+                <span class="mc-ville mc-ville--more">+ {villesDuMetier(m).length - 5} villes</span>
+              </div>
+              <a href={`/metiers/${m.slug}`} class="mc-link">Découvrir →</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="cta-final">
+    <div class="container reveal">
+      <h2>Un projet en Île-de-France ?</h2>
+      <p>Contactez-nous pour un devis gratuit. Intervention rapide dans tout le Val-de-Marne.</p>
+      <a href="/contact" class="btn btn-primary">Demander un devis gratuit →</a>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #1E3A1E 0%, #2E5827 60%, #4A7C3F 100%);
+    padding: clamp(3.5rem, 8vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem);
+  }
+  .page-hero .tag { color: rgba(242,234,216,0.6); }
+  .page-hero h1 { font-size: clamp(2rem, 5vw, 3rem); color: #F2EAD8; margin-bottom: 0.75rem; }
+  .hero-sub { color: rgba(242,234,216,0.75); font-size: 1rem; line-height: 1.75; max-width: 60ch; }
+  .cat-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .cat-section:nth-child(even) { background: var(--beige); }
+  .cat-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--vert-fonce);
+    margin-bottom: 2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid rgba(30,58,30,0.1);
+  }
+  .metiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .metier-card {
+    background: var(--blanc);
+    box-shadow: 0 2px 12px rgba(30,58,30,0.06);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s;
+    overflow: hidden;
+  }
+  .metier-card:hover { transform: translateY(-4px); }
+  .mc-main-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 2rem 2rem 0;
+    flex: 1;
+  }
+  .mc-icon { font-size: 2rem; }
+  .metier-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--vert-fonce); }
+  .metier-card p { font-size: 0.87rem; color: var(--texte-leger); line-height: 1.7; }
+  .mc-villes { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; padding: 0.75rem 2rem 0; }
+  .mc-villes-label { font-size: 0.72rem; color: var(--texte-leger); width: 100%; margin-bottom: 0.2rem; }
+  .mc-ville {
+    padding: 0.2rem 0.55rem;
+    background: var(--beige-clair);
+    border: 1px solid rgba(30,58,30,0.1);
+    font-size: 0.72rem;
+    color: var(--vert-fonce);
+    transition: all 0.2s;
+  }
+  .mc-ville:hover { background: var(--vert-moyen); color: var(--beige); border-color: transparent; }
+  .mc-ville--more { background: transparent; border: none; color: var(--texte-leger); font-style: italic; }
+  .mc-link { font-size: 0.82rem; font-weight: 500; color: var(--vert-moyen); padding: 0.75rem 2rem 1.5rem; }
+  .cta-final { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--vert-fonce); text-align: center; }
+  .cta-final h2 { font-size: clamp(1.5rem, 3vw, 2rem); color: var(--beige); margin-bottom: 0.75rem; }
+  .cta-final p { color: rgba(242,234,216,0.7); margin-bottom: 2rem; }
+  @media (max-width: 900px) { .metiers-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .metiers-grid { grid-template-columns: 1fr; } }
+</style>

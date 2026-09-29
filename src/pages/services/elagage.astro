@@ -1,0 +1,130 @@
+---
+import { contact } from '../../data/seo.js';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import ServiceHero from '../../components/ServiceHero.astro';
+
+const prestations = [
+  { icon: "🌳", titre: "Élagage d'arbres", desc: "Taille de formation, réduction de couronne, élagage sanitaire par des élagueurs grimpeurs.", href: "/metiers/elagage-arbres" },
+  { icon: "🪓", titre: "Abattage d'arbres", desc: "Abattage sécurisé d'arbres dangereux ou malades, en espace dégagé ou contraint.", href: "/metiers/abattage-arbres" },
+  { icon: "⚙️", titre: "Rognage de souches", desc: "Broyage complet des souches jusqu'à 20 à 30 cm de profondeur pour libérer l'espace.", href: "/metiers/rognage-souches" },
+  { icon: "✂️", titre: "Taille de haies", desc: "Taille au cordeau de toutes essences : thuyas, lauriers, charmes, buis…", href: "/metiers/taille-haies" },
+  { icon: "🍎", titre: "Taille arbres fruitiers", desc: "Taille de formation et d'entretien, adaptée à chaque essence et à sa saison.", href: "/metiers/taille-arbres-fruitiers" },
+  { icon: "🔍", titre: "Diagnostic d'arbres", desc: "Évaluation de l'état sanitaire et de la dangerosité de vos arbres avant toute intervention.", href: "/contact" },
+];
+---
+
+<Layout
+  title="Élagage & Abattage d'arbres Val-de-Marne | Arbor'essence Paysagiste"
+  description="Élagage, abattage et taille d'arbres en Val-de-Marne et Île-de-France. Élagueurs expérimentés, intervention sécurisée. Rognage de souches. Devis gratuit."
+>
+  <Header />
+  <Breadcrumb items={[{ label: 'Élagage & abattage' }]} />
+  <ServiceHero
+    titre="Élagage & Abattage d'arbres"
+    sousTitre="Interventions en hauteur"
+    icon="🌳"
+    intro="Élagueurs grimpeurs, nous intervenons sur tous types d'arbres en Île-de-France, en toute sécurité, quelle que soit la hauteur ou la configuration du site."
+  />
+
+  <section class="content-section">
+    <div class="container">
+      <div class="content-grid">
+        <div class="content-main reveal">
+          <p class="tag">Notre savoir-faire</p>
+          <h2>L'élagage, une science au service de l'arbre</h2>
+          <p>Un élagage mal réalisé peut fragiliser durablement un arbre, voire accélérer sa mort. C'est pourquoi nous pratiquons des techniques d'élagage modernes, respectueuses de la biologie des arbres.</p>
+          <p>Élagueurs grimpeurs, nous maîtrisons l'ascension à la corde, la taille à la tronçonneuse en hauteur et les techniques de démontage par tronçons dans les espaces contraints.</p>
+          <p>Chaque intervention commence par un diagnostic visuel de l'arbre pour définir le type de taille le plus adapté et identifier d'éventuels risques (cavités, maladies, champignons).</p>
+          <div class="certif-badges">
+            <span class="badge">🪢 Grimpe à la corde</span>
+            <span class="badge">🔐 Travaux en hauteur</span>
+            <span class="badge">♻️ Déchets valorisés</span>
+          </div>
+        </div>
+        <div class="content-aside reveal">
+          <div class="aside-card">
+            <h3>Pourquoi élaguer ?</h3>
+            <ul>
+              <li>🛡️ Sécurité : supprimer les branches mortes ou dangereuses</li>
+              <li>🌱 Santé : aérer le feuillage, limiter les maladies</li>
+              <li>✨ Esthétique : équilibrer le port de l'arbre</li>
+              <li>💡 Luminosité : laisser passer la lumière</li>
+              <li>🏠 Protection : écarter les branches des bâtiments</li>
+            </ul>
+          </div>
+          <div class="aside-cta">
+            <p>Besoin d'un diagnostic ou d'un devis ?</p>
+            <a href="/contact" class="btn btn-primary">Nous contacter →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="prestations-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="tag">Nos prestations élagage</p>
+        <h2>Toutes les interventions sur vos arbres</h2>
+      </div>
+      <div class="prestations-grid">
+        {prestations.map((p, i) => (
+          <a href={p.href} class="prest-card reveal" style={`transition-delay:${i*0.07}s`}>
+            <span class="prest-icon">{p.icon}</span>
+            <h3>{p.titre}</h3>
+            <p>{p.desc}</p>
+            <span class="prest-link">En savoir plus →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="urgence-section reveal">
+    <div class="container urgence-inner">
+      <div>
+        <p class="tag" style="color:var(--vert-sauge)">Intervention urgente</p>
+        <h2>Arbre dangereux après tempête ?</h2>
+        <p>Nous intervenons rapidement pour sécuriser un arbre menaçant, une branche tombée sur une toiture ou une souche instable.</p>
+      </div>
+      <a href={`tel:${contact.telRaw}`} class="btn btn-primary btn-lg">📞 {contact.tel}</a>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .content-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .content-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4rem; align-items: start; }
+  .content-main h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--vert-fonce); margin-bottom: 1.25rem; }
+  .content-main p { font-size: 0.93rem; line-height: 1.85; color: var(--texte-leger); margin-bottom: 1rem; }
+  .certif-badges { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+  .badge { padding: 0.4rem 0.9rem; background: var(--beige); border: 1px solid rgba(30,58,30,0.15); font-size: 0.8rem; color: var(--vert-fonce); }
+  .aside-card { background: var(--blanc); padding: 1.75rem; box-shadow: 0 2px 16px rgba(30,58,30,0.07); margin-bottom: 1.5rem; }
+  .aside-card h3 { font-family: var(--font-display); font-size: 1.1rem; color: var(--vert-fonce); margin-bottom: 1rem; }
+  .aside-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .aside-card li { font-size: 0.86rem; color: var(--texte-leger); line-height: 1.5; }
+  .aside-cta { background: var(--vert-fonce); padding: 1.75rem; color: var(--beige); }
+  .aside-cta p { font-size: 0.9rem; margin-bottom: 1.25rem; opacity: 0.8; }
+  .prestations-section { padding: var(--section-py) 0; background: var(--beige); }
+  .section-head { margin-bottom: 2.5rem; }
+  .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--vert-fonce); }
+  .prestations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .prest-card { background: var(--blanc); padding: 1.75rem; box-shadow: 0 2px 12px rgba(30,58,30,0.06); transition: transform 0.3s; display: flex; flex-direction: column; gap: 0.5rem; }
+  .prest-card:hover { transform: translateY(-4px); }
+  .prest-icon { font-size: 1.6rem; }
+  .prest-card h3 { font-family: var(--font-display); font-size: 1.1rem; color: var(--vert-fonce); }
+  .prest-card p { font-size: 0.86rem; line-height: 1.7; color: var(--texte-leger); flex: 1; }
+  .prest-link { font-size: 0.8rem; font-weight: 500; color: var(--vert-moyen); margin-top: auto; }
+  .urgence-section { background: var(--vert-fonce); padding: clamp(2.5rem, 5vw, 4rem) 0; }
+  .urgence-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .urgence-inner h2 { font-size: clamp(1.5rem, 3vw, 2rem); color: var(--beige); margin-bottom: 0.75rem; }
+  .urgence-inner p { color: rgba(242,234,216,0.7); font-size: 0.92rem; max-width: 50ch; }
+  .btn-lg { padding: 1.1rem 2.5rem; font-size: 0.92rem; }
+  @media (max-width: 860px) { .content-grid { grid-template-columns: 1fr; } .prestations-grid { grid-template-columns: 1fr 1fr; } .urgence-inner { flex-direction: column; align-items: flex-start; } }
+  @media (max-width: 560px) { .prestations-grid { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /envoi.php
+
+Sitemap: https://pietelagage.fr/sitemap-index.xml

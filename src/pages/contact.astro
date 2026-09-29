@@ -1,0 +1,235 @@
+---
+import { contact, metiers, villes } from '../data/seo.js';
+
+const categories = [...new Set(metiers.map(m => m.categorie))];
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+---
+
+<Layout title="Contact & Devis gratuit | Arbor'essence Paysagiste Val-de-Marne">
+  <Header />
+  <Breadcrumb items={[{ label: 'Contact' }]} />
+
+  <section class="page-hero">
+    <div class="container">
+      <p class="tag">Nous contacter</p>
+      <h1>Devis gratuit & sans engagement</h1>
+      <p>Décrivez votre projet, nous vous recontactons rapidement.</p>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <div class="container contact-grid">
+
+      <div class="contact-info reveal">
+        <h2>Parlons de votre projet</h2>
+        <p>Que vous ayez un grand jardin à aménager ou une haie à tailler, nous sommes là pour vous conseiller et établir un devis adapté à vos besoins.</p>
+
+        <div class="info-items">
+          <div class="info-item">
+            <span class="info-icon">📍</span>
+            <div>
+              <strong>Adresse</strong>
+              <span>{contact.adresse}</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">📞</span>
+            <div>
+              <strong>Téléphone</strong>
+              <a href={`tel:${contact.telRaw}`}>{contact.tel}</a>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">✉️</span>
+            <div>
+              <strong>Email</strong>
+              <a href={`mailto:${contact.email}`}>{contact.email}</a>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">🕐</span>
+            <div>
+              <strong>Horaires</strong>
+              <span>Lun–Ven : 8h–18h · Sam : 8h–12h</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone-info">
+          <p class="tag">Zone d'intervention</p>
+          <p>Maisons-Alfort · Créteil · Vincennes · Charenton · Saint-Maur-des-Fossés · Joinville-le-Pont et toute l'Île-de-France.</p>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap reveal" id="formulaire">
+        <div class="form-status form-status--ok" id="status-ok" hidden>
+          ✓ Merci ! Votre demande a bien été envoyée. Nous vous recontactons rapidement.
+        </div>
+        <div class="form-status form-status--err" id="status-err" hidden>
+          Une erreur est survenue lors de l'envoi. Merci de réessayer ou de nous appeler au <a href={`tel:${contact.telRaw}`}>{contact.tel}</a>.
+        </div>
+        <form class="contact-form" id="contact-form" action="/api/devis" method="post">
+          <!-- Anti-spam : champ invisible que seuls les robots remplissent -->
+          <div class="hp" aria-hidden="true">
+            <label for="site_web">Ne pas remplir</label>
+            <input type="text" id="site_web" name="site_web" tabindex="-1" autocomplete="off" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="prenom">Prénom *</label>
+              <input type="text" id="prenom" name="prenom" required placeholder="Jean" />
+            </div>
+            <div class="form-group">
+              <label for="nom">Nom *</label>
+              <input type="text" id="nom" name="nom" required placeholder="Dupont" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required placeholder="jean.dupont@email.fr" />
+          </div>
+          <div class="form-group">
+            <label for="tel">Téléphone</label>
+            <input type="tel" id="tel" name="tel" placeholder="06 XX XX XX XX" />
+          </div>
+          <div class="form-group">
+            <label for="commune">Commune du chantier</label>
+            <input type="text" id="commune" name="commune" list="communes" placeholder="Ex. Créteil" autocomplete="address-level2" />
+            <datalist id="communes">
+              {villes.map(v => <option value={v.nom} data-slug={v.slug} />)}
+            </datalist>
+          </div>
+          <div class="form-group">
+            <label for="service">Service souhaité</label>
+            <select id="service" name="service">
+              <option value="">-- Choisir un service --</option>
+              {categories.map(cat => (
+                <optgroup label={cat}>
+                  {metiers.filter(m => m.categorie === cat).map(m => (
+                    <option value={m.titre} data-slug={m.slug}>{m.titre}</option>
+                  ))}
+                </optgroup>
+              ))}
+              <optgroup label="Autres">
+                <option>Arrosage automatique</option>
+                <option>Entretien régulier (service à la personne)</option>
+                <option>Autre</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Décrivez votre projet *</label>
+            <textarea id="message" name="message" required rows="5" placeholder="Dites-nous en plus sur votre jardin, vos besoins, votre commune..."></textarea>
+          </div>
+          <label class="consent">
+            <input type="checkbox" name="consent" required />
+            <span>J'accepte que mes données soient utilisées pour traiter ma demande de devis. <a href="/confidentialite">Politique de confidentialité</a> *</span>
+          </label>
+          <button type="submit" class="btn btn-primary btn-full">Envoyer ma demande →</button>
+          <p class="form-note">* Champs obligatoires. Nous vous répondrons rapidement.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const envoi = params.get('envoi');
+
+  // Préremplissage depuis les boutons « Devis gratuit » (?service=slug&ville=slug)
+  const service = params.get('service');
+  const select = document.getElementById('service') as HTMLSelectElement | null;
+  const opt = service && select?.querySelector<HTMLOptionElement>(`option[data-slug="${CSS.escape(service)}"]`);
+  if (select && opt) select.value = opt.value;
+  const ville = params.get('ville');
+  const commune = document.getElementById('commune') as HTMLInputElement | null;
+  const villeOpt = ville && document.querySelector<HTMLOptionElement>(`#communes option[data-slug="${CSS.escape(ville)}"]`);
+  if (commune && villeOpt) commune.value = villeOpt.value;
+
+  if (envoi === 'ok') document.getElementById('status-ok')?.removeAttribute('hidden');
+  if (envoi === 'erreur') document.getElementById('status-err')?.removeAttribute('hidden');
+</script>
+
+<style>
+  .page-hero {
+    background: var(--vert-fonce);
+    padding: 5rem 0 3.5rem;
+    color: var(--beige);
+  }
+  .page-hero .tag { color: var(--vert-sauge); }
+  .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0.75rem; }
+  .page-hero p { color: rgba(242,234,216,0.7); font-size: 1rem; }
+
+  .contact-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-info h2 { font-size: 1.8rem; color: var(--vert-fonce); margin-bottom: 1rem; }
+  .contact-info > p { font-size: 0.92rem; line-height: 1.8; color: var(--texte-leger); margin-bottom: 2rem; }
+
+  .info-items { display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 2rem; }
+  .info-item { display: flex; align-items: flex-start; gap: 1rem; }
+  .info-icon { font-size: 1.1rem; margin-top: 0.1rem; }
+  .info-item > div { display: flex; flex-direction: column; }
+  .info-item strong { font-size: 0.82rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--vert-fonce); margin-bottom: 0.2rem; }
+  .info-item span, .info-item a { font-size: 0.9rem; color: var(--texte-leger); }
+  .info-item a:hover { color: var(--vert-moyen); }
+
+  .zone-info { padding: 1.5rem; background: var(--beige); border-left: 3px solid var(--vert-sauge); }
+  .zone-info p { font-size: 0.87rem; line-height: 1.7; color: var(--texte-leger); }
+
+  .contact-form-wrap {
+    background: var(--blanc);
+    padding: 2.5rem;
+    box-shadow: 0 4px 30px rgba(30,58,30,0.08);
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--vert-fonce); }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.75rem 1rem;
+    border: 1.5px solid rgba(30,58,30,0.15);
+    background: var(--beige-clair);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--texte);
+    outline: none;
+    transition: border-color 0.2s;
+    border-radius: 0;
+    appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--vert-moyen); }
+  .form-group textarea { resize: vertical; }
+
+  .btn-full { width: 100%; justify-content: center; padding: 1rem; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .consent { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.8rem; line-height: 1.5; color: var(--texte-leger); }
+  .consent input { margin-top: 0.2rem; accent-color: var(--vert-moyen); }
+  .consent a { color: var(--vert-clair); text-decoration: underline; }
+  .form-status { padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.5; }
+  .form-status--ok { background: #E6F0E1; color: var(--vert-fonce); border-left: 3px solid var(--vert-moyen); }
+  .form-status--err { background: #F7E4DF; color: #7A2E1E; border-left: 3px solid #B5482E; }
+  .form-status a { text-decoration: underline; }
+  .form-note { font-size: 0.75rem; color: var(--texte-leger); text-align: center; }
+
+  @media (max-width: 860px) {
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>

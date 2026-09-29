@@ -1,0 +1,196 @@
+---
+import { villes, metiers, contact } from '../data/seo.js';
+---
+
+<footer>
+  <div class="footer-top">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="logo-footer">
+          <span class="logo-leaf">✦</span>
+          <div>
+            <span class="logo-name">Arbor'essence</span>
+            <span class="logo-sub">Paysagiste en Île-de-France</span>
+          </div>
+        </a>
+        <p>Votre paysagiste de confiance depuis plus de 20 ans dans le Val-de-Marne et toute l'Île-de-France.</p>
+        {(contact.instagram || contact.facebook) && (
+        <div class="socials">
+          {contact.instagram && (
+          <a href={contact.instagram} aria-label="Instagram" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          )}
+          {contact.facebook && (
+          <a href={contact.facebook} aria-label="Facebook" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          )}
+        </div>
+        )}
+      </div>
+
+      <div class="footer-col">
+        <h4><a href="/metiers">Nos prestations</a></h4>
+        <ul>
+          {metiers.map(m => (
+            <li><a href={`/metiers/${m.slug}`}>{m.icon} {m.titre}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4><a href="/villes">Nos villes (94)</a></h4>
+        <ul class="villes-list">
+          {villes.map(v => (
+            <li><a href={`/villes/${v.slug}`}>📍 {v.nom}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href={`tel:${contact.telRaw}`}>{contact.tel}</a></li>
+          <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+          <li>{contact.adresse}</li>
+        </ul>
+        <div class="horaires">
+          <strong>Horaires</strong>
+          <span>Lun – Ven : 8h – 18h</span>
+          <span>Sam : 8h – 12h</span>
+        </div>
+        <a href="/contact" class="btn btn-outline" style="margin-top:1.25rem;">Devis gratuit →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <span>© {new Date().getFullYear()} Arbor'essence – Tous droits réservés</span>
+      <div class="footer-links">
+        <a href="/mentions-legales">Mentions légales</a>
+        <a href="/confidentialite">Confidentialité</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer { background: var(--vert-fonce); color: rgba(242,234,216,0.85); }
+
+  .footer-top { padding: 4rem 0 3rem; }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .logo-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.2rem;
+    color: var(--beige);
+  }
+  .logo-leaf { font-size: 1.3rem; color: var(--vert-sauge); }
+  .logo-name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--beige);
+    line-height: 1;
+  }
+  .logo-sub {
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--vert-sauge);
+    margin-top: 0.1rem;
+  }
+
+  .footer-brand p {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .socials { display: flex; gap: 0.75rem; }
+  .socials a {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(242,234,216,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(242,234,216,0.7);
+    transition: all 0.3s;
+  }
+  .socials a:hover {
+    background: var(--vert-moyen);
+    border-color: var(--vert-moyen);
+    color: var(--beige);
+  }
+
+  .footer-col h4 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--beige);
+    margin-bottom: 1.25rem;
+  }
+  .footer-col h4 a { color: var(--beige); }
+  .footer-col h4 a:hover { color: var(--blanc); }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li {
+    margin-bottom: 0.5rem;
+    font-size: 0.83rem;
+    line-height: 1.5;
+  }
+  .footer-col ul li a {
+    color: rgba(242,234,216,0.7);
+    transition: color 0.2s;
+  }
+  .footer-col ul li a:hover { color: var(--beige); }
+  .villes-list { columns: 2; column-gap: 0.5rem; }
+
+  .horaires {
+    margin-top: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.82rem;
+  }
+  .horaires strong { color: var(--beige); font-weight: 500; margin-bottom: 0.1rem; }
+
+  .btn-outline {
+    color: var(--beige);
+    border-color: rgba(242,234,216,0.4);
+    font-size: 0.78rem;
+  }
+  .btn-outline:hover { background: var(--vert-moyen); border-color: var(--vert-moyen); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(242,234,216,0.1);
+    padding: 1.2rem 0;
+  }
+  .footer-bottom .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .footer-bottom span { font-size: 0.78rem; opacity: 0.5; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.78rem; opacity: 0.5; transition: opacity 0.2s; }
+  .footer-links a:hover { opacity: 1; }
+
+  @media (max-width: 900px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  }
+  @media (max-width: 560px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+</style>

@@ -1,0 +1,137 @@
+---
+import { contact } from '../../data/seo.js';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import ServiceHero from '../../components/ServiceHero.astro';
+
+const etapes = [
+  { num: "01", titre: "Demande de devis", desc: "Contactez-nous pour décrire votre jardin et vos besoins. Nous établissons un devis personnalisé." },
+  { num: "02", titre: "Intervention", desc: "Nous intervenons à domicile selon le planning défini avec vous." },
+  { num: "03", titre: "Facture et attestation", desc: "Nous émettons une facture et une attestation fiscale annuelle pour votre déclaration d'impôts." },
+  { num: "04", titre: "Réduction d'impôts", desc: "Vous bénéficiez d'un crédit d'impôt égal à 50% des sommes versées." },
+];
+---
+
+<Layout
+  title="Service à la Personne Jardinage Val-de-Marne | Arbor'essence – 50% d'impôts"
+  description="Entretien de jardin avec réduction d'impôts de 50% en Val-de-Marne et Île-de-France. Arbor'essence prestataire déclaré Service à la Personne. Devis gratuit."
+>
+  <Header />
+  <Breadcrumb items={[{ label: 'Service à la personne' }]} />
+  <ServiceHero
+    titre="Service à la Personne – Jardinage"
+    sousTitre="Réduction d'impôts 50%"
+    icon="🏠"
+    intro="Arbor'essence est déclaré Service à la Personne. Toutes nos prestations d'entretien de jardin chez les particuliers ouvrent droit à un crédit d'impôt de 50%."
+  />
+
+  <section class="avantage-section">
+    <div class="container">
+      <div class="big-avantage reveal">
+        <div class="big-pct">50<span>%</span></div>
+        <div class="big-text">
+          <p class="tag">Dispositif légal</p>
+          <h2>La moitié de vos dépenses de jardinage remboursée</h2>
+          <p>Le dispositif Services à la Personne (SAP) ouvre droit à un crédit d'impôt égal à 50% des sommes dépensées pour l'entretien de votre jardin. S'il dépasse le montant de votre impôt, la différence vous est remboursée : les foyers non imposables en profitent donc aussi.</p>
+          <p><strong>Exemple concret :</strong> pour 1 000 € de prestations d'entretien, vous ne payez réellement que 500 € après réduction d'impôts.</p>
+          <div class="limits-note">
+            <strong>Plafond annuel :</strong> 5 000 € de dépenses par an et par foyer pour les petits travaux de jardinage, soit 2 500 € de crédit d'impôt maximum.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="etapes-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="tag">Comment ça fonctionne ?</p>
+        <h2>Simple et sans démarche de votre côté</h2>
+      </div>
+      <div class="etapes-grid">
+        {etapes.map((e, i) => (
+          <div class="etape-card reveal" style={`transition-delay:${i*0.1}s`}>
+            <span class="etape-num">{e.num}</span>
+            <h3>{e.titre}</h3>
+            <p>{e.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="services-sap">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="tag">Prestations éligibles</p>
+        <h2>Ce que nous faisons dans le cadre du SAP</h2>
+      </div>
+      <div class="sap-services-grid">
+        {[
+          ["🌾", "Tonte de pelouse"],
+          ["✂️", "Taille de haies"],
+          ["🌺", "Entretien des massifs"],
+          ["🍂", "Ramassage de feuilles"],
+          ["🌱", "Désherbage"],
+          ["🌿", "Taille d'arbustes"],
+          ["💧", "Arrosage (pose et maintenance)"],
+          ["🪴", "Plantation saisonnière"],
+        ].map(([icon, label]) => (
+          <div class="sap-chip reveal">
+            <span>{icon}</span>
+            <span>{label}</span>
+          </div>
+        ))}
+      </div>
+      <p class="sap-note reveal">⚠️ Les travaux de création et d'aménagement (création de jardin, engazonnement…) ne sont pas éligibles au SAP. Seules les prestations d'entretien récurrent sont concernées.</p>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <div class="container reveal">
+      <h2>Profitez du jardinage à moitié prix</h2>
+      <p>Contactez-nous pour un devis et bénéficiez dès maintenant des avantages du Service à la Personne.</p>
+      <div class="cta-actions">
+        <a href="/contact" class="btn btn-primary">Demander un devis gratuit</a>
+        <a href={`tel:${contact.telRaw}`} class="btn btn-outline">{contact.tel}</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .avantage-section { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .big-avantage { display: flex; align-items: center; gap: 4rem; flex-wrap: wrap; background: var(--vert-fonce); padding: 4rem; }
+  .big-pct { font-family: var(--font-display); font-size: clamp(5rem, 14vw, 9rem); font-weight: 600; color: var(--beige); line-height: 1; flex-shrink: 0; }
+  .big-pct span { font-size: 0.5em; }
+  .big-text .tag { color: var(--vert-sauge); }
+  .big-text h2 { font-size: clamp(1.4rem, 3vw, 2rem); color: var(--beige); margin-bottom: 1rem; }
+  .big-text p { font-size: 0.92rem; line-height: 1.8; color: rgba(242,234,216,0.75); margin-bottom: 0.75rem; }
+  .big-text strong { color: var(--beige); }
+  .limits-note { margin-top: 1.25rem; padding: 1rem 1.25rem; background: rgba(242,234,216,0.1); border-left: 3px solid var(--vert-sauge); font-size: 0.88rem; color: rgba(242,234,216,0.8); }
+  .etapes-section { padding: var(--section-py) 0; background: var(--beige); }
+  .section-head { margin-bottom: 2.5rem; }
+  .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--vert-fonce); }
+  .etapes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .etape-card { background: var(--blanc); padding: 2rem 1.5rem; box-shadow: 0 2px 12px rgba(30,58,30,0.06); position: relative; }
+  .etape-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 600; color: rgba(30,58,30,0.1); display: block; margin-bottom: 0.75rem; line-height: 1; }
+  .etape-card h3 { font-family: var(--font-display); font-size: 1.1rem; color: var(--vert-fonce); margin-bottom: 0.5rem; }
+  .etape-card p { font-size: 0.86rem; line-height: 1.7; color: var(--texte-leger); }
+  .services-sap { padding: var(--section-py) 0; background: var(--beige-clair); }
+  .sap-services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .sap-chip { background: var(--blanc); padding: 1.25rem 1rem; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 2px 8px rgba(30,58,30,0.06); font-size: 0.88rem; color: var(--vert-fonce); }
+  .sap-chip span:first-child { font-size: 1.2rem; }
+  .sap-note { font-size: 0.83rem; color: var(--texte-leger); padding: 1rem 1.25rem; background: rgba(139,107,61,0.08); border-left: 3px solid var(--terre); line-height: 1.6; }
+  .cta-final { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--vert-fonce); text-align: center; }
+  .cta-final h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--beige); margin-bottom: 0.75rem; }
+  .cta-final p { color: rgba(242,234,216,0.7); margin-bottom: 2rem; }
+  .cta-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .btn-outline { background: transparent; color: var(--beige); border: 1.5px solid rgba(242,234,216,0.4); display: inline-flex; align-items: center; padding: .9rem 2rem; font-family: var(--font-body); font-size: .85rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; transition: all .3s; }
+  .btn-outline:hover { background: rgba(242,234,216,0.1); }
+  @media (max-width: 900px) { .etapes-grid { grid-template-columns: 1fr 1fr; } .sap-services-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .etapes-grid { grid-template-columns: 1fr; } .sap-services-grid { grid-template-columns: 1fr; } .big-avantage { padding: 2rem 1.5rem; gap: 1.5rem; } }
+</style>
