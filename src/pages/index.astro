@@ -57,21 +57,21 @@ const clients = [
 
 const temoignages = [
   {
-    text: "Travail soigné, équipe sérieuse et ponctuelle. Notre jardin a été entièrement repensé, le résultat dépasse nos attentes.",
-    name: "Marie L.",
-    ville: "Maisons-Alfort",
+    text: "L'entretien et l'aménagement personnalisé de notre jardin par cet artisan nous donne entière satisfaction depuis des années. Compétence, efficacité, diligence et disponibilité sont des qualités que nous apprécions particulièrement chez lui.",
+    name: "Alain E.",
+    ville: "",
     note: "⭐⭐⭐⭐⭐",
   },
   {
-    text: "Très professionnel pour l'entretien de notre résidence. Toujours présents au bon moment, espaces verts impeccables.",
-    name: "Syndic Résidence les Acacias",
-    ville: "Créteil",
+    text: "M. Luijken a exercé son activité professionnelle sur le terrain de ma mère. Super travail, un travail avec conscience, application. Je recommande cette entreprise pour vos travaux paysagers.",
+    name: "Michel B.",
+    ville: "",
     note: "⭐⭐⭐⭐⭐",
   },
   {
-    text: "Arrosage automatique installé rapidement et proprement. Parfait suivi, je recommande vivement.",
-    name: "Thomas B.",
-    ville: "Vincennes",
+    text: "Un élagueur et paysagiste qui aime son métier et très professionnel. Intervient rapidement en cas de dégâts. Je recommande...",
+    name: "Denise L.",
+    ville: "",
     note: "⭐⭐⭐⭐⭐",
   },
 ];
@@ -209,7 +209,7 @@ const temoignages = [
             <p class="avis-text">"{t.text}"</p>
             <div class="avis-author">
               <strong>{t.name}</strong>
-              <span>{t.ville}</span>
+              {t.ville && <span>{t.ville}</span>}
             </div>
           </div>
         ))}
