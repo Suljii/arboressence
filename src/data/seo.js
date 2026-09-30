@@ -35,6 +35,24 @@ export const legal = {
  */
 export const villes = [
   {
+    slug: "villeneuve-le-roi",
+    nom: "Villeneuve-le-Roi",
+    dept: "94290",
+    description:
+      "Arbor'essence est installée à Villeneuve-le-Roi. Entre la Seine et le plateau d'Orly, cette commune pavillonnaire compte de nombreux jardins privés que nous entretenons et aménageons, au plus près de chez nous.",
+    intro:
+      "Paysagiste et élagueur à Villeneuve-le-Roi – élagage, entretien et aménagement de jardins.",
+  },
+  {
+    slug: "l-hay-les-roses",
+    nom: "L'Haÿ-les-Roses",
+    dept: "94240",
+    description:
+      "Connue pour sa Roseraie du Val-de-Marne, L'Haÿ-les-Roses est une commune résidentielle où nous intervenons pour l'élagage, la taille de haies et l'entretien des jardins de particuliers et de copropriétés.",
+    intro:
+      "Paysagiste à L'Haÿ-les-Roses – élagage, taille de haies et entretien de jardins.",
+  },
+  {
     slug: "maisons-alfort",
     nom: "Maisons-Alfort",
     dept: "94700",
@@ -74,7 +92,7 @@ export const villes = [
     nom: "Charenton-le-Pont",
     dept: "94220",
     description:
-      "Idéalement situé à la frontière de Paris, Charenton-le-Pont fait partie de notre zone d'intervention privilégiée pour l'entretien et l'aménagement paysager.",
+      "Idéalement situé à la frontière de Paris, Charenton-le-Pont fait partie de notre zone d'intervention pour l'entretien et l'aménagement paysager.",
     intro:
       "Paysagiste à Charenton-le-Pont – entretien jardins et espaces verts.",
   },
@@ -101,7 +119,7 @@ export const villes = [
     nom: "Alfortville",
     dept: "94140",
     description:
-      "Ville limitrophe de Maisons-Alfort, Alfortville est l'une de nos communes de prédilection pour l'entretien de jardins et l'élagage d'arbres.",
+      "Ville limitrophe de Maisons-Alfort, Alfortville fait partie de notre zone d'intervention pour l'entretien de jardins et l'élagage d'arbres.",
     intro:
       "Paysagiste à Alfortville – entretien, élagage et arrosage automatique.",
   },
@@ -110,7 +128,7 @@ export const villes = [
     nom: "Joinville-le-Pont",
     dept: "94340",
     description:
-      "Blottie entre Marne et bois, Joinville-le-Pont est une commune verdoyante où nous intervenons régulièrement pour les particuliers et résidences.",
+      "Blottie entre Marne et bois, Joinville-le-Pont est une commune verdoyante où nous intervenons pour les particuliers et résidences.",
     intro: "Paysagiste à Joinville-le-Pont – création et entretien de jardins.",
   },
   {
@@ -127,7 +145,7 @@ export const villes = [
     nom: "Nogent-sur-Marne",
     dept: "94130",
     description:
-      "Ville résidentielle au bord de la Marne, Nogent-sur-Marne est une commune où nous accompagnons de nombreux propriétaires dans l'entretien de leurs jardins.",
+      "Ville résidentielle au bord de la Marne, Nogent-sur-Marne est une commune où nous accompagnons les propriétaires dans l'entretien de leurs jardins.",
     intro: "Paysagiste à Nogent-sur-Marne – entretien et aménagement paysager.",
   },
   {
@@ -169,7 +187,7 @@ export const villes = [
     nom: "Paris",
     dept: "75",
     description:
-      "Arbor'essence intervient également à Paris, notamment dans les arrondissements du sud et de l'est (12e, 13e, 20e) pour les jardins privatifs, cours et toitures végétalisées.",
+      "Arbor'essence intervient également à Paris pour l'entretien des jardins privatifs, des cours d'immeubles et l'élagage des arbres.",
     intro: "Paysagiste à Paris – jardins, cours et espaces verts en ville.",
   },
 ];
@@ -274,7 +292,7 @@ export const metiers = [
     icon: "🍎",
     metaTitle: "Taille d'arbres fruitiers en Val-de-Marne | Arbor'essence",
     metaDesc:
-      "Taille de formation et d'entretien pour pommiers, poiriers, cerisiers en Île-de-France. Paysagiste expert. Devis gratuit.",
+      "Taille de formation et d'entretien pour pommiers, poiriers, cerisiers en Île-de-France. Paysagiste professionnel. Devis gratuit.",
     intro:
       "La taille des arbres fruitiers est un art qui demande connaissance des variétés et respect des cycles végétatifs. Nous adaptons chaque taille à l'arbre et à sa saison.",
     description: `Les arbres fruitiers nécessitent une taille annuelle adaptée à leur variété et à leur stade de développement. Une taille bien menée préserve la santé de l'arbre, aère la frondaison et maintient un port équilibré.\n\nNous intervenons pour la taille de formation des jeunes arbres, la taille d'entretien annuelle, et la taille de rajeunissement pour les vieux vergers.\n\nNous travaillons sur toutes les essences fruitières : pommiers, poiriers, cerisiers, pruniers, abricotiers, figuiers…`,

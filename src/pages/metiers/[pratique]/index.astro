@@ -85,7 +85,7 @@ const autresMetiers = metiers.filter(m => m.slug !== metier.slug && m.categorie 
     <div class="container reveal">
       <p class="tag">Zone d'intervention</p>
       <h2>{metier.titre} dans votre commune</h2>
-      <p class="zones-intro">Arbor'essence intervient pour {metier.avecArticle} dans toutes les communes du Val-de-Marne et en Île-de-France. Cliquez sur votre ville pour plus d'informations :</p>
+      <p class="zones-intro">Arbor'essence intervient pour {metier.avecArticle} dans le Val-de-Marne et partout en Île-de-France. Cliquez sur votre ville pour plus d'informations :</p>
       <div class="villes-grid">
         {villesMetier.map(v => (
           <a href={`/metiers/${metier.slug}/${v.slug}`} class="ville-chip">

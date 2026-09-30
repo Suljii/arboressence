@@ -20,11 +20,8 @@ const navServices = [
   <div class="header-main">
     <div class="container header-inner">
       <a href="/" class="logo" aria-label="Arbor'essence – accueil">
-        <span class="logo-leaf">✦</span>
-        <div>
-          <span class="logo-name">Arbor'essence</span>
-          <span class="logo-sub">Paysagiste - Arboriste grimpeur</span>
-        </div>
+        <img src="/Logo_Arbo.png" alt="Arbor'essence" width="934" height="172" class="logo-img" />
+        <span class="logo-sub">Paysagiste - Arboriste grimpeur</span>
       </a>
       <nav class="nav-desktop">
         <!-- Dropdown Prestations -->
@@ -122,18 +119,16 @@ const navServices = [
 
   .logo {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    flex-direction: column;
+    align-items: flex-start;
     flex-shrink: 0;
   }
-  .logo-leaf { font-size: 1.4rem; color: var(--vert-moyen); }
-  .logo-name {
+  .logo-img {
     display: block;
-    font-family: var(--font-display);
-    font-size: 1.45rem;
-    font-weight: 600;
-    color: var(--vert-fonce);
-    line-height: 1;
+    height: 44px;
+    width: auto;
+    /* le PNG a des marges transparentes : on les compense */
+    margin: -6px 0 -6px -5px;
   }
   .logo-sub {
     display: block;
@@ -272,6 +267,7 @@ const navServices = [
   }
 
   @media (max-width: 900px) {
+    .logo-img { height: 38px; }
     .nav-desktop { display: none; }
     .header-cta { display: none; }
     .burger { display: flex; margin-left: auto; }

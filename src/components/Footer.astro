@@ -7,11 +7,8 @@ import { villes, metiers, contact } from '../data/seo.js';
     <div class="container footer-grid">
       <div class="footer-brand">
         <a href="/" class="logo-footer">
-          <span class="logo-leaf">✦</span>
-          <div>
-            <span class="logo-name">Arbor'essence</span>
-            <span class="logo-sub">Paysagiste en Île-de-France</span>
-          </div>
+          <img src="/Logo_Arbo_Clair.png" alt="Arbor'essence" width="934" height="172" class="logo-img" loading="lazy" />
+          <span class="logo-sub">Paysagiste en Île-de-France</span>
         </a>
         <p>Votre paysagiste de confiance depuis plus de 20 ans dans le Val-de-Marne et toute l'Île-de-France.</p>
         {(contact.instagram || contact.facebook) && (
@@ -88,20 +85,17 @@ import { villes, metiers, contact } from '../data/seo.js';
   }
 
   .logo-footer {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
     margin-bottom: 1.2rem;
-    color: var(--beige);
   }
-  .logo-leaf { font-size: 1.3rem; color: var(--vert-sauge); }
-  .logo-name {
+  .logo-img {
     display: block;
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--beige);
-    line-height: 1;
+    height: 40px;
+    width: auto;
+    /* le PNG a des marges transparentes : on les compense */
+    margin: -5px 0 -5px -4px;
   }
   .logo-sub {
     display: block;
